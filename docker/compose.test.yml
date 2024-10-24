@@ -1,0 +1,27 @@
+services:
+  test:
+    build:
+      context: ..
+      target: test
+    volumes:
+      - ../coverage/cov:/data/app/coverage
+      - ../coverage/logs:/data/app/logs
+    env_file:
+      - path: ../.env.test.local
+        required: false
+    environment:
+      NODE_ENV: test
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: postgres

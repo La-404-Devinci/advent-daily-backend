@@ -1,0 +1,19 @@
+name: Run tests
+
+on:
+    pull_request:
+        branches:
+            - main
+            - master
+            - develop
+    workflow_dispatch:
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        name: Run tests
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Run tests
+              run: npm run ci:test

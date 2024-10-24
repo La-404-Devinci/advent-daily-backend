@@ -1,0 +1,14 @@
+# Node Modules
+node_modules/
+
+# Environment Variables
+.env*.local
+
+# Build
+dist/
+
+# Tests
+npm-debug.log
+.coverage
+.coverage.*
+coverage/

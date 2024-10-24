@@ -1,0 +1,29 @@
+services:
+  web:
+    build:
+      context: ..
+      target: production
+    ports:
+      - "0.0.0.0:3000:3000"
+    env_file:
+      - path: ../.env
+        required: true
+      - path: ../.env.production.local
+        required: true
+    volumes:
+      - ../logs:/logs
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17-alpine
+    env_file:
+      - path: ../.env
+        required: true
+      - path: ../.env.production.local
+        required: true
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:

@@ -1,0 +1,14 @@
+.git
+.github
+
+.env
+.env*.local
+
+**/node_modules/
+**/dist/
+logs/
+
+npm-debug.log
+.coverage
+.coverage.*
+coverage/

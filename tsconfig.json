@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "module": "commonjs",
+        "rootDir": "./",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["./*"]
+        },
+        "typeRoots": [
+            "types",
+            "./node_modules/@types",
+            "../node_modules/@types" // for docker test environment
+        ],
+        "resolveJsonModule": true,
+        "outDir": "./dist",
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "noImplicitAny": true,
+        "types": ["jest", "node"]
+    },
+    "exclude": ["node_modules", "dist"]
+}

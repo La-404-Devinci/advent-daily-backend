@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "module": "commonjs",
+        "rootDir": "./",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["./*"]
+        },
+        "typeRoots": ["types", "./node_modules/@types", "../node_modules/@types"],
+        "resolveJsonModule": true,
+        "outDir": "./dist",
+        "removeComments": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipDefaultLibCheck": false,
+        "skipLibCheck": true,
+        "noImplicitAny": true,
+        "types": ["node"],
+        "plugins": [{ "transform": "typescript-transform-paths" }]
+    },
+    "exclude": ["node_modules", "dist", "tests", "scripts", "jest.config.ts"]
+}

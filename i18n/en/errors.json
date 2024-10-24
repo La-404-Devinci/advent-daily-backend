@@ -1,0 +1,5 @@
+{
+    "template": "This is a template error message",
+    "validation": "Validation error",
+    "database": "Database error"
+}
