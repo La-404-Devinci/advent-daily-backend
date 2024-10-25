@@ -1,5 +1,5 @@
 {
-  "id": "0e004108-39e1-4d32-b380-d66778f5ed70",
+  "id": "b0e99e73-e2d8-4775-a232-6adac633f175",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -11,13 +11,13 @@
         "user_uuid": {
           "name": "user_uuid",
           "type": "uuid",
-          "primaryKey": true,
-          "notNull": true
+          "primaryKey": false,
+          "notNull": false
         },
         "challenge_id": {
           "name": "challenge_id",
           "type": "serial",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "created_by": {
@@ -41,9 +41,48 @@
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "user_uuid_idx": {
+          "name": "user_uuid_idx",
+          "columns": [
+            {
+              "expression": "user_uuid",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "challenge_id_idx": {
+          "name": "challenge_id_idx",
+          "columns": [
+            {
+              "expression": "challenge_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "acquired_user_uuid_challenge_id_pk": {
+          "name": "acquired_user_uuid_challenge_id_pk",
+          "columns": [
+            "user_uuid",
+            "challenge_id"
+          ]
+        }
+      },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },

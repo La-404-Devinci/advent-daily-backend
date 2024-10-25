@@ -1,9 +1,10 @@
 CREATE TABLE IF NOT EXISTS "acquired" (
-	"user_uuid" uuid PRIMARY KEY NOT NULL,
-	"challenge_id" serial PRIMARY KEY NOT NULL,
+	"user_uuid" uuid,
+	"challenge_id" serial NOT NULL,
 	"created_by" serial NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "acquired_user_uuid_challenge_id_pk" PRIMARY KEY("user_uuid","challenge_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "challenges" (
@@ -43,6 +44,8 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "user_uuid_idx" ON "acquired" USING btree ("user_uuid");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "challenge_id_idx" ON "acquired" USING btree ("challenge_id");--> statement-breakpoint
 CREATE UNIQUE INDEX IF NOT EXISTS "name_unique_idx" ON "clubs" USING btree ("name");--> statement-breakpoint
 CREATE UNIQUE INDEX IF NOT EXISTS "email_unique_idx" ON "users" USING btree ("email");--> statement-breakpoint
 CREATE UNIQUE INDEX IF NOT EXISTS "username_unique_idx" ON "users" USING btree ("username");
