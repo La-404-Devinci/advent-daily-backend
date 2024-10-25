@@ -1,0 +1,24 @@
+name: Check lint
+
+on:
+    push:
+        branches:
+            - main
+            - master
+            - develop
+    pull_request:
+        branches:
+            - main
+            - master
+            - develop
+    workflow_dispatch:
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        name: Check lint
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Check lint
+              run: npm run lint
