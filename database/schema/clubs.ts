@@ -6,8 +6,8 @@ export const clubs = pgTable(
         id: serial("id").primaryKey(),
         avatarUrl: text("avatar_url").notNull(),
         name: text("name").notNull(),
-        description: text("description").notNull(),
-        dailyDate: date("daily_date").notNull(),
+        description: text("description"),
+        dailyDate: date("daily_date", { mode: "date" }),
         updatedAt: timestamp("updated_at")
             .defaultNow()
             .notNull()

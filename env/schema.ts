@@ -11,5 +11,9 @@ export const envSchema = z.object({
     POSTGRES_USER: z.string().default("postgres"),
     POSTGRES_PASSWORD: z.string().default("postgres"),
     POSTGRES_HOST: z.string().default("postgres"),
-    POSTGRES_PORT: znumber().default("5432")
+    POSTGRES_PORT: znumber().default("5432"),
+
+    JWT_SECRET: z.string().default("secret"),
+
+    ADMIN_TOKEN: z.string().default("super_admin_token")
 });

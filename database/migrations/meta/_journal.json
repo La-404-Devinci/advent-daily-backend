@@ -8,6 +8,13 @@
       "when": 1729847426779,
       "tag": "0000_smart_jackal",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1730026796599,
+      "tag": "0001_nosy_maestro",
+      "breakpoints": true
     }
   ]
 }

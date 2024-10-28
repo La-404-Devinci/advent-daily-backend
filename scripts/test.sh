@@ -14,7 +14,7 @@ docker compose -f $file rm -s -f -v
 
 # Run tests
 echo "Building and running tests..."
-docker compose -f $file up --build -d --force-recreate --remove-orphans
+docker compose -f $file up --build -d --force-recreate --remove-orphans --renew-anon-volumes
 
 echo "Attaching tests..."
 docker compose -f $file attach test

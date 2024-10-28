@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Logger from "../log/logger";
+import { Payload } from "@/models/status";
 
 export function logIncoming(req: Request, res: Response, next: NextFunction) {
     const randomUUID = Math.random().toString(36).substring(7);
@@ -12,8 +13,10 @@ export function logIncoming(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
-export function logOutgoing(err: unknown, req: Request, res: Response, next: NextFunction) {
+export function logOutgoing(err: Payload | Error, req: Request, res: Response, next: NextFunction) {
     const responseTime = Date.now() - req.receivedAt;
-    Logger.writeRaw(`[RES] (-->) ${req.uuid} ${res.statusCode} (${responseTime}ms)`);
+    Logger.writeRaw(
+        `[RES] (-->) ${req.uuid} ${err instanceof Error ? err.name : err.masterStatus} (${responseTime}ms)`
+    );
     next(err);
 }

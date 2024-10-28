@@ -1,7 +1,7 @@
 import request from "supertest";
 import createApp from "@/app";
 
-const app = createApp("e2e-users");
+const app = createApp("unit-status");
 
 describe("Test status page", () => {
     test("should send a 200", async () => {

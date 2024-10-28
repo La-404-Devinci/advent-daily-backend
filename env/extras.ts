@@ -7,3 +7,9 @@ export const znumber = () =>
         .string()
         .regex(/^[0-9]+$/)
         .transform((val) => parseInt(val));
+
+export const zdate = () =>
+    z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/)
+        .transform((val) => new Date(val));
