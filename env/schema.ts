@@ -13,7 +13,25 @@ export const envSchema = z.object({
     POSTGRES_HOST: z.string().default("postgres"),
     POSTGRES_PORT: znumber().default("5432"),
 
+    REDIS_HOST: z.string().default("redis"),
+    REDIS_PORT: znumber().default("6379"),
+
+    MINIO_ROOT_USER: z.string().default("minio"),
+    MINIO_ROOT_PASSWORD: z.string().default("minio"),
+    MINIO_HOST: z.string().default("minio"),
+    MINIO_PORT: znumber().default("9000"),
+    MINIO_DEFAULT_BUCKETS: z.string().default("george"),
+
     JWT_SECRET: z.string().default("secret"),
 
-    ADMIN_TOKEN: z.string().default("super_admin_token")
+    ADMIN_TOKEN: z.string().default("super_admin_token"),
+
+    MAIL_SERVER: z.string().default("smtp.example.com"),
+    MAIL_PORT: znumber().default("587"),
+    MAIL_SECURE: zboolean().default("true"),
+    MAIL_USER: z.string().default(""),
+    MAIL_PASSWORD: z.string().default(""),
+    MAIL_FROM: z.string().default(""),
+
+    MAIL_REDIRECT_URL: z.string().default("")
 });

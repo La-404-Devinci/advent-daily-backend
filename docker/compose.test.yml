@@ -25,3 +25,13 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             POSTGRES_HOST: postgres
+
+    redis:
+        image: redis:7.4
+
+    minio:
+        image: "minio/minio:latest"
+        environment:
+            MINIO_ROOT_USER: minio
+            MINIO_ROOT_PASSWORD: minio
+            MINIO_DEFAULT_BUCKETS: george
