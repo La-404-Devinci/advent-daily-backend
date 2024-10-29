@@ -6,6 +6,10 @@ declare global {
             uuid: string;
             receivedAt: number;
             lang: string;
+            user?: {
+                uuid: string;
+                email: string;
+            };
         }
     }
 }

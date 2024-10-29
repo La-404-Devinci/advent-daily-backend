@@ -9,6 +9,7 @@ import { logIncoming, logOutgoing } from "./middlewares/log";
 import middlewareCore from "./middlewares/core";
 import loadEnv from "./env/loader";
 import { initDatabase } from "./database/config";
+import middlewareUser from "./middlewares/auth/user";
 
 export default (logSuffix?: string, initDb = true) => {
     if (initDb) {
@@ -27,6 +28,7 @@ export default (logSuffix?: string, initDb = true) => {
     app.use(cookieParser());
 
     app.use(middlewareI18n);
+    app.use(middlewareUser);
 
     app.use(logIncoming);
     app.use(routes);
