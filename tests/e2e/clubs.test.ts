@@ -185,9 +185,7 @@ describe("Test users", () => {
     });
 
     test("should get daily club", async () => {
-        const res = await get(app, "/daily", undefined, undefined, {
-            "X-ADMIN-KEY": globals.env.ADMIN_TOKEN
-        });
+        const res = await get(app, "/daily");
 
         expect(res.body).toStrictEqual({
             masterStatus: 200,
