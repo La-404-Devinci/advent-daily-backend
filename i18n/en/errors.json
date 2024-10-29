@@ -3,6 +3,12 @@
     "validation": "Validation error",
     "database": "Database error",
     "auth": {
-        "admin": "Invalid X-ADMIN-KEY header"
+        "admin": "Invalid X-ADMIN-KEY header",
+        "toomany": "Too many results",
+        "invalid": "Invalid credentials",
+        "conflict": {
+            "email": "Email already in use",
+            "username": "Username already in use"
+        }
     }
 }

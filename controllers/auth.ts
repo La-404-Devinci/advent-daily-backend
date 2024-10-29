@@ -9,13 +9,43 @@ export default abstract class AuthController {
      * @returns The creation token
      */
     public static generateCreationToken(email: string): string {
-        return jwt.sign(email, globals.env.JWT_SECRET, { expiresIn: "15m" });
+        return jwt.sign({ email: email, type: "creation" }, globals.env.JWT_SECRET, { expiresIn: "15m" });
     }
 
+    /**
+     * Validates a creation token
+     * @param token The token to validate
+     * @returns The email of the user or null if the token is invalid
+     */
     public static validateCreationToken(token: string): string | null {
         try {
-            const email = jwt.verify(token, globals.env.JWT_SECRET);
-            return typeof email === "string" ? email : null;
+            const email = jwt.verify(token, globals.env.JWT_SECRET) as { email: string; type: string };
+            if (email.type !== "creation") return null;
+            return email.email || null;
+        } catch {
+            return null;
+        }
+    }
+
+    /**
+     * Creates an authentication token for a specific email
+     * @param email The email of the user
+     * @returns The authentication token
+     */
+    public static generateAuthToken(email: string): string {
+        return jwt.sign({ email: email, type: "auth" }, globals.env.JWT_SECRET);
+    }
+
+    /**
+     * Validates an authentication token
+     * @param token The token to validate
+     * @returns The email of the user or null if the token is invalid
+     */
+    public static validateAuthToken(token: string): string | null {
+        try {
+            const email = jwt.verify(token, globals.env.JWT_SECRET) as { email: string; type: string };
+            if (email.type !== "auth") return null;
+            return email.email || null;
         } catch {
             return null;
         }
