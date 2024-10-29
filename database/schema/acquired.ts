@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { index, pgTable, primaryKey, serial, timestamp, uuid } from "drizzle-orm/pg-core";
 import { users } from "./users";
-import { challenges } from "./challeges";
+import { challenges } from "./challenges";
 
 export const acquired = pgTable(
     "acquired",

@@ -13,10 +13,31 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             POSTGRES_HOST: postgres
+
+            REDIS_HOST: redis
+
+            MINIO_ROOT_USER: minio
+            MINIO_ROOT_PASSWORD: minio
+            MINIO_HOST: minio
+            MINIO_DEFAULT_BUCKETS: george
         stdin_open: true
         tty: true
         depends_on:
             - postgres
+
+    redis:
+        image: redis:7.4
+        ports:
+            - "0.0.0.0:6379:6379"
+
+    minio:
+        image: minio/minio
+        environment:
+            MINIO_ROOT_USER: minio
+            MINIO_ROOT_PASSWORD: minio
+            MINIO_DEFAULT_BUCKETS: george
+        ports:
+            - "0.0.0.0:8900:9000"
 
     postgres:
         image: postgres:17-alpine
