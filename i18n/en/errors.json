@@ -7,6 +7,7 @@
         "toomany": "Too many results",
         "invalid": "Invalid credentials",
         "conflict": {
+            "unknown": "Unknown conflict",
             "email": "Email already in use",
             "username": "Username already in use"
         }

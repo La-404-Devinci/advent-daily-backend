@@ -12,7 +12,7 @@ describe("Test authentication", () => {
 
     test("should send an email", async () => {
         // We use X-ADMIN-KEY to fetch back the redirect URL
-        const res = await post(app, "/send-mail", { email: email }, { "X-ADMIN-KEY": globals.env.ADMIN_TOKEN });
+        const res = await post(app, "/auth/send-mail", { email: email }, { "X-ADMIN-KEY": globals.env.ADMIN_TOKEN });
 
         expect(res.body).toStrictEqual({
             masterStatus: 201,
@@ -30,7 +30,7 @@ describe("Test authentication", () => {
     });
 
     test("should get 'too many requests' error", async () => {
-        const res = await post(app, "/send-mail", { email: email });
+        const res = await post(app, "/auth/send-mail", { email: email });
 
         expect(res.body).toStrictEqual({
             masterStatus: 429,
@@ -217,11 +217,44 @@ describe("Test authentication", () => {
     });
 
     test("should get the authenticated user", async () => {
-        const res = await get(app, "/me", undefined, undefined, {
+        const meRes = await get(app, "/me", undefined, undefined, {
             Authorization: `Bearer ${authToken}`
         });
 
-        expect(res.body).toStrictEqual({});
+        expect(meRes.body).toStrictEqual({
+            masterStatus: 200,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 200,
+                    success: true,
+                    data: {
+                        id: userId
+                    }
+                }
+            ]
+        });
+
+        const res = await get(app, "/users/:id", { id: userId }, undefined, { Authorization: `Bearer ${authToken}` });
+
+        expect(res.body).toStrictEqual({
+            masterStatus: 200,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 200,
+                    success: true,
+                    data: {
+                        id: userId,
+                        email: email,
+                        username: "test",
+                        createdAt: expect.any(String),
+                        updatedAt: expect.any(String),
+                        quote: "test"
+                    }
+                }
+            ]
+        });
     });
 
     test("should get 'unauthorized' error", async () => {

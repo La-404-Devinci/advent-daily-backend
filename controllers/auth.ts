@@ -1,5 +1,5 @@
 import globals from "@/env/env";
-import * as jwt from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 
 export default abstract class AuthController {
     /**
@@ -9,7 +9,7 @@ export default abstract class AuthController {
      * @returns The creation token
      */
     public static generateCreationToken(email: string): string {
-        return jwt.sign({ email: email, type: "creation" }, globals.env.JWT_SECRET, { expiresIn: "15m" });
+        return sign({ email: email, type: "creation" }, globals.env.JWT_SECRET, { expiresIn: "15m" });
     }
 
     /**
@@ -19,7 +19,7 @@ export default abstract class AuthController {
      */
     public static validateCreationToken(token: string): string | null {
         try {
-            const email = jwt.verify(token, globals.env.JWT_SECRET) as { email: string; type: string };
+            const email = verify(token, globals.env.JWT_SECRET) as { email: string; type: string };
             if (email.type !== "creation") return null;
             return email.email || null;
         } catch {
@@ -33,7 +33,7 @@ export default abstract class AuthController {
      * @returns The authentication token
      */
     public static generateAuthToken(email: string): string {
-        return jwt.sign({ email: email, type: "auth" }, globals.env.JWT_SECRET);
+        return sign({ email: email, type: "auth" }, globals.env.JWT_SECRET);
     }
 
     /**
@@ -43,7 +43,7 @@ export default abstract class AuthController {
      */
     public static validateAuthToken(token: string): string | null {
         try {
-            const email = jwt.verify(token, globals.env.JWT_SECRET) as { email: string; type: string };
+            const email = verify(token, globals.env.JWT_SECRET) as { email: string; type: string };
             if (email.type !== "auth") return null;
             return email.email || null;
         } catch {
