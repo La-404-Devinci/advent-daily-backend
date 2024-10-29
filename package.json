@@ -11,6 +11,7 @@
         "format": "prettier --write .",
         "lint": "eslint .",
         "clear": "rm -rf dist node_modules coverage logs/*.log",
+        "clear:logs": "rm -rf logs/*.log",
         "db:migrate": "drizzle-kit generate"
     },
     "author": {

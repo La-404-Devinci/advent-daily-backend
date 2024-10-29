@@ -1,6 +1,6 @@
 {
-    "id": "b0e99e73-e2d8-4775-a232-6adac633f175",
-    "prevId": "00000000-0000-0000-0000-000000000000",
+    "id": "170545eb-3d51-460a-803a-ad873237e458",
+    "prevId": "b0e99e73-e2d8-4775-a232-6adac633f175",
     "version": "7",
     "dialect": "postgresql",
     "tables": {
@@ -158,13 +158,13 @@
                     "name": "description",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true
+                    "notNull": false
                 },
                 "daily_date": {
                     "name": "daily_date",
                     "type": "date",
                     "primaryKey": false,
-                    "notNull": true
+                    "notNull": false
                 },
                 "updated_at": {
                     "name": "updated_at",

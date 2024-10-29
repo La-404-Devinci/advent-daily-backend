@@ -1,5 +1,8 @@
 {
     "template": "This is a template error message",
     "validation": "Validation error",
-    "database": "Database error"
+    "database": "Database error",
+    "auth": {
+        "admin": "Invalid X-ADMIN-KEY header"
+    }
 }
