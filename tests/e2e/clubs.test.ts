@@ -10,7 +10,7 @@ const testGlobals = {
     challengedId: 0
 };
 
-describe("Test users", () => {
+describe("Test clubs", () => {
     test("should create a non-challenger club", async () => {
         const res = await post(
             app,
