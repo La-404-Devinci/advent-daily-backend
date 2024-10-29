@@ -1,8 +1,8 @@
 import { Router } from "express";
-import clubsRouter from "./routes/clubs/router";
-import adminRouter from "./routes/admin/router";
-import Route_Index_Read from "./routes/index";
-import Route_Daily_Read from "./routes/daily";
+import clubsRouter from "./clubs/router";
+import adminRouter from "./admin/router";
+import Route_Index_Read from "./index";
+import Route_Daily_Read from "./daily";
 
 const router = Router();
 

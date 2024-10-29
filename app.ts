@@ -3,7 +3,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import middlewareI18n from "./middlewares/i18n";
 import Logger from "./log/logger";
-import routes from "./routes";
+import routes from "./routes/router";
 import Status from "./models/status";
 import { logIncoming, logOutgoing } from "./middlewares/log";
 import middlewareCore from "./middlewares/core";
