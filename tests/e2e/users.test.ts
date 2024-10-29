@@ -30,7 +30,7 @@ describe("Test users", () => {
         });
     });
 
-    let userId: string;
+    let userUuid: string;
 
     test("should create a user", async () => {
         const res = await post(app, "/users", {
@@ -48,9 +48,9 @@ describe("Test users", () => {
                     status: 201,
                     success: true,
                     data: {
-                        id: expect.any(Number),
+                        uuid: expect.any(Number),
                         email: email,
-                        username: "test",
+                        username: "test-users",
                         createdAt: expect.any(String),
                         updatedAt: expect.any(String)
                     }
@@ -58,7 +58,7 @@ describe("Test users", () => {
             ]
         });
 
-        userId = res.body.response[0].data.id;
+        userUuid = res.body.response[0].data.uuid;
     });
 
     test("should get 'email already exists' error", async () => {
@@ -115,7 +115,7 @@ describe("Test users", () => {
             app,
             "/users/:id",
             {
-                id: userId
+                uuid: userUuid
             },
             {
                 quote: "test"
@@ -138,7 +138,9 @@ describe("Test users", () => {
     });
 
     test("should get the user", async () => {
-        const res = await get(app, "/users/:id", { id: userId }, undefined, { Authorization: `Bearer ${authToken}` });
+        const res = await get(app, "/users/:id", { uuid: userUuid }, undefined, {
+            Authorization: `Bearer ${authToken}`
+        });
 
         expect(res.body).toStrictEqual({
             masterStatus: 200,
@@ -148,7 +150,7 @@ describe("Test users", () => {
                     status: 200,
                     success: true,
                     data: {
-                        id: userId,
+                        uuid: userUuid,
                         email: email,
                         username: "test-users",
                         createdAt: expect.any(String),
