@@ -48,8 +48,11 @@ describe("Test users", () => {
                     status: 201,
                     success: true,
                     data: {
-                        uuid: expect.any(Number),
+                        uuid: expect.any(String),
                         email: email,
+                        clubId: null,
+                        avatarUrl: null,
+                        quote: null,
                         username: "test-users",
                         createdAt: expect.any(String),
                         updatedAt: expect.any(String)
