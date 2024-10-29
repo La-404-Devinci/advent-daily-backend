@@ -21,9 +21,7 @@ describe("Test authentication", () => {
                 {
                     status: 201,
                     success: true,
-                    data: {
-                        link: redirectUrl
-                    }
+                    data: redirectUrl
                 }
             ]
         });
@@ -92,9 +90,7 @@ describe("Test authentication", () => {
                 {
                     status: 200,
                     success: true,
-                    data: {
-                        token: authToken
-                    }
+                    data: authToken
                 }
             ]
         });
@@ -132,9 +128,7 @@ describe("Test authentication", () => {
                 {
                     status: 200,
                     success: true,
-                    data: {
-                        id: userId
-                    }
+                    data: userId
                 }
             ]
         });
