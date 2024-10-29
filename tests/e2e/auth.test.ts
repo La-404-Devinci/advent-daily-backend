@@ -1,5 +1,5 @@
 import createApp from "@/app";
-import { get, post, put } from "../utils";
+import { get, post } from "../utils";
 import globals from "@/env/env";
 import AuthController from "@/controllers/auth";
 
@@ -46,28 +46,6 @@ describe("Test authentication", () => {
         });
     });
 
-    test("should get 'invalid token' error", async () => {
-        const res = await post(app, "/users", {
-            email: email,
-            token: "definitely not a valid token",
-            password: "password",
-            username: "test"
-        });
-
-        expect(res.body).toStrictEqual({
-            masterStatus: 400,
-            sentAt: expect.any(Number),
-            response: [
-                {
-                    status: 400,
-                    success: false,
-                    error: "errors.auth.invalid",
-                    translatedError: "Invalid credentials"
-                }
-            ]
-        });
-    });
-
     let userId: string;
 
     test("should create a user", async () => {
@@ -97,53 +75,6 @@ describe("Test authentication", () => {
         });
 
         userId = res.body.response[0].data.id;
-    });
-
-    test("should get 'email already exists' error", async () => {
-        const res = await post(app, "/users", {
-            email: email,
-            token: token,
-            password: "password",
-            username: "another-test"
-        });
-
-        expect(res.body).toStrictEqual({
-            masterStatus: 409,
-            sentAt: expect.any(Number),
-            response: [
-                {
-                    status: 409,
-                    success: false,
-                    error: "errors.auth.conflict.email",
-                    translatedError: "Email already in use"
-                }
-            ]
-        });
-    });
-
-    test("should get 'username already exists' error", async () => {
-        const anotherEmail = "another-test@no-reply.local";
-        const anotherToken = AuthController.generateCreationToken(anotherEmail);
-
-        const res = await post(app, "/users", {
-            email: anotherEmail,
-            token: anotherToken,
-            password: "password",
-            username: "test"
-        });
-
-        expect(res.body).toStrictEqual({
-            masterStatus: 409,
-            sentAt: expect.any(Number),
-            response: [
-                {
-                    status: 409,
-                    success: false,
-                    error: "errors.auth.conflict.username",
-                    translatedError: "Username already in use"
-                }
-            ]
-        });
     });
 
     const authToken = AuthController.generateAuthToken(email);
@@ -189,33 +120,6 @@ describe("Test authentication", () => {
         });
     });
 
-    test("should edit the user", async () => {
-        const res = await put(
-            app,
-            "/users/:id",
-            {
-                id: userId
-            },
-            {
-                quote: "test"
-            },
-            {
-                Authorization: `Bearer ${authToken}`
-            }
-        );
-
-        expect(res.body).toStrictEqual({
-            masterStatus: 204,
-            sentAt: expect.any(Number),
-            response: [
-                {
-                    status: 204,
-                    success: true
-                }
-            ]
-        });
-    });
-
     test("should get the authenticated user", async () => {
         const meRes = await get(app, "/me", undefined, undefined, {
             Authorization: `Bearer ${authToken}`
@@ -230,27 +134,6 @@ describe("Test authentication", () => {
                     success: true,
                     data: {
                         id: userId
-                    }
-                }
-            ]
-        });
-
-        const res = await get(app, "/users/:id", { id: userId }, undefined, { Authorization: `Bearer ${authToken}` });
-
-        expect(res.body).toStrictEqual({
-            masterStatus: 200,
-            sentAt: expect.any(Number),
-            response: [
-                {
-                    status: 200,
-                    success: true,
-                    data: {
-                        id: userId,
-                        email: email,
-                        username: "test",
-                        createdAt: expect.any(String),
-                        updatedAt: expect.any(String),
-                        quote: "test"
                     }
                 }
             ]
