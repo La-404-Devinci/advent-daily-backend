@@ -1,6 +1,6 @@
 import createApp from "@/app";
-import { get, post, put } from "../utils";
 import AuthController from "@/controllers/auth";
+import { get, post, put } from "../utils";
 
 const app = createApp("e2e-users");
 
@@ -61,7 +61,7 @@ describe("Test users", () => {
             ]
         });
 
-        userUuid = res.body.response[0].data.uuid || "invalid";
+        userUuid = res.body.response[0].data.uuid ?? "invalid";
     });
 
     test("should get 'email already exists' error", async () => {

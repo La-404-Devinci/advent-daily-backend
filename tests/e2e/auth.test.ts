@@ -1,7 +1,7 @@
 import createApp from "@/app";
-import { get, post } from "../utils";
-import globals from "@/env/env";
 import AuthController from "@/controllers/auth";
+import globals from "@/env/env";
+import { get, post } from "../utils";
 
 const app = createApp("e2e-auth");
 
@@ -75,7 +75,7 @@ describe("Test authentication", () => {
             ]
         });
 
-        userUuid = res.body.response[0].data.uuid || "invalid";
+        userUuid = res.body.response[0].data.uuid ?? "invalid";
     });
 
     const authToken = AuthController.generateAuthToken(email);

@@ -46,14 +46,24 @@ export default abstract class UserController {
 
     public static async createUser(username: string, email: string, hashpass: string) {
         try {
+            // return all columns but the haspass
             const user = await DB.instance
                 .insert(users)
                 .values({
-                    email: email,
                     username: username,
+                    email: email,
                     hashpass: hashpass
                 })
-                .returning();
+                .returning({
+                    uuid: users.uuid,
+                    clubId: users.clubId,
+                    username: users.username,
+                    avatarUrl: users.avatarUrl,
+                    createdAt: users.createdAt,
+                    updatedAt: users.updatedAt,
+                    quote: users.quote,
+                    email: users.email
+                });
 
             return user[0];
         } catch (error) {
