@@ -23,8 +23,8 @@ describe("Test users", () => {
                 {
                     status: 400,
                     success: false,
-                    error: "errors.auth.invalid.credentials",
-                    translatedError: "Invalid credentials"
+                    error: "errors.auth.invalid.token",
+                    translatedError: "Invalid token"
                 }
             ]
         });
