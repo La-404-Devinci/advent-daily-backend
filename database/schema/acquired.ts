@@ -1,14 +1,14 @@
 import { relations } from "drizzle-orm";
-import { index, pgTable, primaryKey, serial, timestamp, uuid } from "drizzle-orm/pg-core";
+import { index, integer, pgTable, primaryKey, timestamp, uuid } from "drizzle-orm/pg-core";
 import { users } from "./users";
 import { challenges } from "./challenges";
 
 export const acquired = pgTable(
     "acquired",
     {
-        userUuid: uuid("user_uuid"),
-        challengeId: serial("challenge_id"),
-        createdBy: serial("created_by"),
+        userUuid: uuid("user_uuid").notNull(),
+        challengeId: integer("challenge_id").notNull(),
+        createdBy: integer("created_by"),
         updatedAt: timestamp("updated_at")
             .defaultNow()
             .notNull()

@@ -75,7 +75,7 @@ describe("Test authentication", () => {
             ]
         });
 
-        userUuid = res.body.response[0].data.uuid;
+        userUuid = res.body.response[0].data.uuid || "invalid";
     });
 
     const authToken = AuthController.generateAuthToken(email);

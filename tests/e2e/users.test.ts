@@ -61,7 +61,7 @@ describe("Test users", () => {
             ]
         });
 
-        userUuid = res.body.response[0].data.uuid;
+        userUuid = res.body.response[0].data.uuid || "invalid";
     });
 
     test("should get 'email already exists' error", async () => {
@@ -117,15 +117,9 @@ describe("Test users", () => {
         const res = await put(
             app,
             "/users/:uuid",
-            {
-                uuid: userUuid
-            },
-            {
-                quote: "test"
-            },
-            {
-                Authorization: `Bearer ${authToken}`
-            }
+            { uuid: userUuid },
+            { quote: "test" },
+            { Authorization: `Bearer ${authToken}` }
         );
 
         expect(res.body).toStrictEqual({
@@ -141,14 +135,12 @@ describe("Test users", () => {
     });
 
     test("should get 'invalid token' error", async () => {
-        const res = await get(
+        const res = await put(
             app,
             "/users/:uuid",
             { uuid: userUuid },
             { quote: "another-test" },
-            {
-                Authorization: `Bearer definitely not a valid token`
-            }
+            { Authorization: `Bearer definitely not a valid token` }
         );
 
         expect(res.body).toStrictEqual({
