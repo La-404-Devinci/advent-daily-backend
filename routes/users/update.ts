@@ -21,11 +21,18 @@ const body = z.object({
 export default async function Route_Users_Update(req: Request, res: Response, next: NextFunction) {
     const paramsPayload = params.safeParse(req.params);
     const bodyPayload = body.safeParse(req.body);
-
+    
     if (!paramsPayload.success || !bodyPayload.success) {
         return Status.send(req, next, {
             status: 400,
             error: "errors.validation"
+        });
+    }
+
+    if (req.user?.uuid !== paramsPayload.data.id) {
+        return Status.send(req, next, {
+            status: 401,
+            error: "errors.auth.invalid.credentials"
         });
     }
 
