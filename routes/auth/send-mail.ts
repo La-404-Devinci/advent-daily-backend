@@ -17,6 +17,16 @@ const body = z.object({
     email: z.string()
 });
 
+/**
+ * Send an email to the specified email address
+ * to create a user.
+ *
+ * The email address must end with @edu.devinci.fr
+ * and must not be used by an existing user.
+ *
+ * Returns the URL of the creation page if the
+ * request is from an admin (X-ADMIN-KEY header).
+ */
 export default async function Route_Auth_Sendmail(req: Request, res: Response, next: NextFunction) {
     const bodyPayload = body.safeParse(req.body);
 
@@ -27,14 +37,15 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         });
     }
 
-    if (
-        globals.env.NODE_ENV !== "production" &&
-        /^[a-zA-Z0-9._%+-]+@edu\.devinci\.fr$/.test(bodyPayload.data.email) === false
-    ) {
-        return Status.send(req, next, {
-            status: 400,
-            error: "errors.validation"
-        });
+    if (globals.env.NODE_ENV === "production") {
+        if (/^[a-zA-Z0-9._%+-]+@edu\.devinci\.fr$/.test(bodyPayload.data.email) === false) {
+            return Status.send(req, next, {
+                status: 400,
+                error: "errors.auth.invalid.email"
+            });
+        }
+    } else {
+        Logger.debug(`send-mail.ts::Route_Auth_Sendmail: Skipping email verification`);
     }
 
     if (await Redis.get(`timeout::${bodyPayload.data.email}`)) {

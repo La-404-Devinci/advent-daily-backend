@@ -67,9 +67,7 @@ describe("Test authentication", () => {
                         uuid: expect.any(String),
                         email: email,
                         quote: null,
-                        username: "test",
-                        createdAt: expect.any(String),
-                        updatedAt: expect.any(String)
+                        username: "test"
                     }
                 }
             ]
@@ -112,7 +110,7 @@ describe("Test authentication", () => {
                 {
                     status: 401,
                     success: false,
-                    error: "errors.auth.invalid",
+                    error: "errors.auth.invalid.credentials",
                     translatedError: "Invalid credentials"
                 }
             ]

@@ -23,7 +23,7 @@ describe("Test users", () => {
                 {
                     status: 400,
                     success: false,
-                    error: "errors.auth.invalid",
+                    error: "errors.auth.invalid.credentials",
                     translatedError: "Invalid credentials"
                 }
             ]
@@ -156,7 +156,7 @@ describe("Test users", () => {
                 {
                     status: 401,
                     success: false,
-                    error: "errors.auth.invalid",
+                    error: "errors.auth.invalid.credentials",
                     translatedError: "Invalid credentials"
                 }
             ]

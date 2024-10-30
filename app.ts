@@ -8,8 +8,8 @@ import Status from "./models/status";
 import { logIncoming, logOutgoing } from "./middlewares/log";
 import middlewareCore from "./middlewares/core";
 import loadEnv from "./env/loader";
-import { initDatabase } from "./database/config";
 import middlewareUser from "./middlewares/auth/user";
+import initDatabase from "./database/init";
 
 export default (logSuffix?: string, initDb = true) => {
     if (initDb) {

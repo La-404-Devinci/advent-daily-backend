@@ -3,6 +3,10 @@ import Status from "@/models/status";
 import { Request, Response, NextFunction } from "express";
 import qr from "qr-base64";
 
+/**
+ * Generate a QR code with the user's profile URL.
+ * Returns the base64 encoded QR code.
+ */
 export default async function Route_Auth_MeQr(req: Request, res: Response, next: NextFunction) {
     if (!req.user) {
         return Status.send(req, next, {

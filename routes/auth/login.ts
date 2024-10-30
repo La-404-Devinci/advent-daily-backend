@@ -10,6 +10,9 @@ const body = z.object({
     password: z.string()
 });
 
+/**
+ * Handles the login route.
+ */
 export default async function Route_Auth_Login(req: Request, res: Response, next: NextFunction) {
     const bodyPayload = body.safeParse(req.body);
 
@@ -32,7 +35,7 @@ export default async function Route_Auth_Login(req: Request, res: Response, next
     if (!CypherController.verifyPassword(bodyPayload.data.password, user.hashpass)) {
         return Status.send(req, next, {
             status: 401,
-            error: "errors.auth.invalid"
+            error: "errors.auth.invalid.credentials"
         });
     }
 

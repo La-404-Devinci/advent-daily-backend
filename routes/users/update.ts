@@ -13,6 +13,11 @@ const body = z.object({
     quote: z.string().optional()
 });
 
+/**
+ * Handles the PUT /users/:id route.
+ * Updates the user with the given id based on the provided data.
+ * Sends a response with a status of 200 and the updated user data.
+ */
 export default async function Route_Users_Update(req: Request, res: Response, next: NextFunction) {
     const paramsPayload = params.safeParse(req.params);
     const bodyPayload = body.safeParse(req.body);
