@@ -140,6 +140,31 @@ describe("Test users", () => {
         });
     });
 
+    test("should get 'invalid token' error", async () => {
+        const res = await get(
+            app,
+            "/users/:uuid",
+            { uuid: userUuid },
+            { quote: "another-test" },
+            {
+                Authorization: `Bearer definitely not a valid token`
+            }
+        );
+
+        expect(res.body).toStrictEqual({
+            masterStatus: 401,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 401,
+                    success: false,
+                    error: "errors.auth.invalid",
+                    translatedError: "Invalid credentials"
+                }
+            ]
+        });
+    });
+
     test("should get the user", async () => {
         const res = await get(app, "/users/:uuid", { uuid: userUuid }, undefined, {
             Authorization: `Bearer ${authToken}`
