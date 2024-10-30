@@ -10,6 +10,15 @@ describe("Test authentication", () => {
     const token = AuthController.generateCreationToken(email);
     const redirectUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", token);
 
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date("2017-01-01"));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     test("should send an email", async () => {
         // We use X-ADMIN-KEY to fetch back the redirect URL
         const res = await post(app, "/auth/send-mail", { email: email }, { "X-ADMIN-KEY": globals.env.ADMIN_TOKEN });
