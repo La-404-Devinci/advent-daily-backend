@@ -10,6 +10,7 @@
             "unknown": "Unknown conflict",
             "email": "Email already in use",
             "username": "Username already in use"
-        }
+        },
+        "unauthorized": "You must be logged in"
     }
 }

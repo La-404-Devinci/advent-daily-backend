@@ -33,5 +33,6 @@ export const envSchema = z.object({
     MAIL_PASSWORD: z.string().default(""),
     MAIL_FROM: z.string().default(""),
 
-    MAIL_REDIRECT_URL: z.string().default("")
+    MAIL_REDIRECT_URL: z.string().default(""),
+    PROFILE_REDIRECT_URL: z.string().default("")
 });
