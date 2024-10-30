@@ -1,5 +1,5 @@
 {
-    "id": "b0e99e73-e2d8-4775-a232-6adac633f175",
+    "id": "df1b764a-ce7e-4b2e-9cae-4f14f9a4c96e",
     "prevId": "00000000-0000-0000-0000-000000000000",
     "version": "7",
     "dialect": "postgresql",
@@ -12,19 +12,19 @@
                     "name": "user_uuid",
                     "type": "uuid",
                     "primaryKey": false,
-                    "notNull": false
+                    "notNull": true
                 },
                 "challenge_id": {
                     "name": "challenge_id",
-                    "type": "serial",
+                    "type": "integer",
                     "primaryKey": false,
                     "notNull": true
                 },
                 "created_by": {
                     "name": "created_by",
-                    "type": "serial",
+                    "type": "integer",
                     "primaryKey": false,
-                    "notNull": true
+                    "notNull": false
                 },
                 "updated_at": {
                     "name": "updated_at",
@@ -95,9 +95,9 @@
                 },
                 "club_id": {
                     "name": "club_id",
-                    "type": "serial",
+                    "type": "integer",
                     "primaryKey": false,
-                    "notNull": true
+                    "notNull": false
                 },
                 "score": {
                     "name": "score",
@@ -158,13 +158,13 @@
                     "name": "description",
                     "type": "text",
                     "primaryKey": false,
-                    "notNull": true
+                    "notNull": false
                 },
                 "daily_date": {
                     "name": "daily_date",
                     "type": "date",
                     "primaryKey": false,
-                    "notNull": true
+                    "notNull": false
                 },
                 "updated_at": {
                     "name": "updated_at",
@@ -215,7 +215,7 @@
                 },
                 "club_id": {
                     "name": "club_id",
-                    "type": "serial",
+                    "type": "integer",
                     "primaryKey": false,
                     "notNull": true
                 },
@@ -251,9 +251,9 @@
                 },
                 "club_id": {
                     "name": "club_id",
-                    "type": "serial",
+                    "type": "integer",
                     "primaryKey": false,
-                    "notNull": true
+                    "notNull": false
                 },
                 "email": {
                     "name": "email",
@@ -272,6 +272,12 @@
                     "type": "text",
                     "primaryKey": false,
                     "notNull": true
+                },
+                "avatar_url": {
+                    "name": "avatar_url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
                 },
                 "quote": {
                     "name": "quote",
