@@ -3,7 +3,7 @@ import Status from "@/models/status";
 import { Request, Response, NextFunction } from "express";
 import qr from "qr-base64";
 
-export default async function Route_Auth_Me(req: Request, res: Response, next: NextFunction) {
+export default async function Route_Auth_MeQr(req: Request, res: Response, next: NextFunction) {
     if (!req.user) {
         return Status.send(req, next, {
             status: 401,
