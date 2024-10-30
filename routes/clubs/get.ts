@@ -8,6 +8,9 @@ const params = z.object({
     id: znumber()
 });
 
+/**
+ * Get a club by id
+ */
 export default async function Route_Clubs_Get(req: Request, res: Response, next: NextFunction) {
     const payload = params.safeParse(req.params);
     if (!payload.success) {

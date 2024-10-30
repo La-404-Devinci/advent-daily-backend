@@ -10,6 +10,10 @@ const body = z.object({
     token: z.string()
 });
 
+/**
+ * Handles the create user route.
+ * Creates a new user and returns it.
+ */
 export default async function Route_Users_Create(req: Request, res: Response, next: NextFunction) {
     const bodyPayload = body.safeParse(req.body);
 

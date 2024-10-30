@@ -10,6 +10,9 @@ const body = z.object({
     password: z.string()
 });
 
+/**
+ * Handles the login route.
+ */
 export default async function Route_Auth_Login(req: Request, res: Response, next: NextFunction) {
     const bodyPayload = body.safeParse(req.body);
 

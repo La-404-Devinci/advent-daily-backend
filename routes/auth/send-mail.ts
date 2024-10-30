@@ -17,6 +17,16 @@ const body = z.object({
     email: z.string()
 });
 
+/**
+ * Send an email to the specified email address
+ * to create a user.
+ *
+ * The email address must end with @edu.devinci.fr
+ * and must not be used by an existing user.
+ *
+ * Returns the URL of the creation page if the
+ * request is from an admin (X-ADMIN-KEY header).
+ */
 export default async function Route_Auth_Sendmail(req: Request, res: Response, next: NextFunction) {
     const bodyPayload = body.safeParse(req.body);
 
