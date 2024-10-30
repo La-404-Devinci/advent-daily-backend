@@ -11,12 +11,11 @@ describe("Test authentication", () => {
     const redirectUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", token);
 
     beforeAll(() => {
-        jest.useFakeTimers();
-        jest.setSystemTime(new Date("2017-01-01"));
+        AuthController.fakeTime = true;
     });
 
     afterAll(() => {
-        jest.useRealTimers();
+        AuthController.fakeTime = false;
     });
 
     test("should send an email", async () => {

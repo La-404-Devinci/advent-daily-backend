@@ -2,6 +2,8 @@ import globals from "@/env/env";
 import { sign, verify } from "jsonwebtoken";
 
 export default abstract class AuthController {
+    public static fakeTime = false;
+
     /**
      * Creates a creation token for a specific email, which can be used to create a user.
      * The token is valid for 15 minutes.
@@ -9,7 +11,11 @@ export default abstract class AuthController {
      * @returns The creation token
      */
     public static generateCreationToken(email: string): string {
-        return sign({ email: email, type: "creation" }, globals.env.JWT_SECRET, { expiresIn: "15m" });
+        return sign(
+            { email: email, type: "creation" },
+            globals.env.JWT_SECRET,
+            this.fakeTime ? { expiresIn: "15s" } : undefined
+        );
     }
 
     /**
