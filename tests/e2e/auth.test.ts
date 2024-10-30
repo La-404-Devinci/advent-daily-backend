@@ -6,7 +6,7 @@ import { get, post } from "../utils";
 const app = createApp("e2e-auth");
 
 describe("Test authentication", () => {
-    const email = "test@no-reply.local";
+    const email = "test-auth@no-reply.local";
     const token = AuthController.generateCreationToken(email);
     const redirectUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", token);
 

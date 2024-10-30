@@ -11,4 +11,4 @@ else
     SILENT_ARG=""
 fi
 
-npx jest $SILENT_ARG
+npx jest $SILENT_ARG --forceExit

@@ -1,7 +1,11 @@
 import { initDrizzle } from "./config";
 import Redis from "./redis";
 
-export default function initDatabase() {
+export function initDatabase() {
     initDrizzle();
     Redis.init();
+
+    return () => {
+        Redis.close();
+    };
 }

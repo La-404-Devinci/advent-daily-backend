@@ -2,5 +2,5 @@ import "tsconfig-paths/register";
 import init from "@/init";
 
 export default async () => {
-    await init();
+    globalThis.__TEARDOWN_FUNC__ = await init();
 };

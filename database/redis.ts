@@ -17,6 +17,10 @@ export default abstract class Redis {
         Redis.client.connect();
     }
 
+    public static async close() {
+        await Redis.client.quit();
+    }
+
     public static async get<T>(key: string): Promise<T | null> {
         const value = await Redis.client.get(key);
         return value ? JSON.parse(value) : null;

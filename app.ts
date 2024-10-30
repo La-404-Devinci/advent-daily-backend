@@ -9,7 +9,7 @@ import { logIncoming, logOutgoing } from "./middlewares/log";
 import middlewareCore from "./middlewares/core";
 import loadEnv from "./env/loader";
 import middlewareUser from "./middlewares/auth/user";
-import initDatabase from "./database/init";
+import { initDatabase } from "./database/init";
 
 export default (logSuffix?: string, initDb = true) => {
     if (initDb) {
