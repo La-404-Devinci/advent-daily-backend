@@ -5,7 +5,7 @@ export default class DB {
     static instance: NodePgDatabase;
 }
 
-export function initDatabase() {
+export function initDrizzle() {
     DB.instance = drizzle({
         connection: {
             user: globals.env.POSTGRES_USER,

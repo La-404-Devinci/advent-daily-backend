@@ -37,14 +37,15 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         });
     }
 
-    if (
-        globals.env.NODE_ENV !== "production" &&
-        /^[a-zA-Z0-9._%+-]+@edu\.devinci\.fr$/.test(bodyPayload.data.email) === false
-    ) {
-        return Status.send(req, next, {
-            status: 400,
-            error: "errors.validation"
-        });
+    if (globals.env.NODE_ENV === "production") {
+        if (/^[a-zA-Z0-9._%+-]+@edu\.devinci\.fr$/.test(bodyPayload.data.email) === false) {
+            return Status.send(req, next, {
+                status: 400,
+                error: "errors.auth.invalid.email"
+            });
+        }
+    } else {
+        Logger.debug(`send-mail.ts::Route_Auth_Sendmail: Skipping email verification`);
     }
 
     if (await Redis.get(`timeout::${bodyPayload.data.email}`)) {
