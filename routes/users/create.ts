@@ -1,3 +1,4 @@
+import AuthController from "@/controllers/auth";
 import UserController from "@/controllers/users";
 import Status from "@/models/status";
 import { NextFunction, Request, Response } from "express";
@@ -20,11 +21,20 @@ export default async function Route_Users_Create(req: Request, res: Response, ne
         });
     }
 
-    const tokenValid = true; // TODO: Validate token
-    if (!tokenValid) {
+    const token = bodyPayload.data.token;
+    const tokenPayload = AuthController.validateAuthToken(token);
+    
+    if (!tokenPayload) {
         return Status.send(req, next, {
-            status: 401,
-            error: "errors.unauthorized"
+            status: 400,
+            error: "errors.auth.invalid.token"
+        });
+    }
+
+    if (tokenPayload !== bodyPayload.data.email) {
+        return Status.send(req, next, {
+            status: 400,
+            error: "errors.auth.invalid.email"
         });
     }
 

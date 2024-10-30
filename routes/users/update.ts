@@ -9,7 +9,8 @@ const params = z.object({
 
 const body = z.object({
     username: z.string().optional(),
-    avatarUrl: z.string().optional()
+    avatarUrl: z.string().optional(),
+    quote: z.string().optional()
 });
 
 export default async function Route_Users_Update(req: Request, res: Response, next: NextFunction) {
@@ -33,15 +34,21 @@ export default async function Route_Users_Update(req: Request, res: Response, ne
     }
 
     const updatedUser = await UserController.updateUser(
+        user.uuid,
         bodyPayload.data.username || user.username,
-        bodyPayload.data.avatarUrl || user.avatarUrl || undefined
+        bodyPayload.data.avatarUrl || user.avatarUrl || undefined,
+        bodyPayload.data.quote || undefined
     );
+
+    if (!updatedUser) {
+        return Status.send(req, next, {
+            status: 500,
+            error: "errors.server"
+        });
+    }
 
     return Status.send(req, next, {
         status: 200,
-        data: {
-            from: user,
-            to: updatedUser
-        }
+        data: updatedUser
     });
 }

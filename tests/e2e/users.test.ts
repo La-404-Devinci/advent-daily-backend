@@ -54,8 +54,6 @@ describe("Test users", () => {
                         avatarUrl: null,
                         quote: null,
                         username: "test-users",
-                        createdAt: expect.any(String),
-                        updatedAt: expect.any(String)
                     }
                 }
             ]
@@ -123,12 +121,20 @@ describe("Test users", () => {
         );
 
         expect(res.body).toStrictEqual({
-            masterStatus: 204,
+            masterStatus: 200,
             sentAt: expect.any(Number),
             response: [
                 {
-                    status: 204,
-                    success: true
+                    status: 200,
+                    success: true,
+                    data: {
+                        uuid: userUuid,
+                        email: email,
+                        username: "test-users",
+                        avatarUrl: null,
+                        clubId: null,
+                        quote: "test"
+                    }
                 }
             ]
         });
@@ -173,8 +179,8 @@ describe("Test users", () => {
                         uuid: userUuid,
                         email: email,
                         username: "test-users",
-                        createdAt: expect.any(String),
-                        updatedAt: expect.any(String),
+                        avatarUrl: null,
+                        clubId: null,
                         quote: "test"
                     }
                 }

@@ -8,9 +8,11 @@ export default abstract class UserController {
         const user = await DB.instance
             .select({
                 uuid: users.uuid,
-                clubId: users.clubId,
+                email: users.email,
                 username: users.username,
-                avatarUrl: users.avatarUrl
+                avatarUrl: users.avatarUrl,
+                clubId: users.clubId,
+                quote: users.quote,
             })
             .from(users)
             .where(eq(users.uuid, uuid))
@@ -46,7 +48,6 @@ export default abstract class UserController {
 
     public static async createUser(username: string, email: string, hashpass: string) {
         try {
-            // return all columns but the haspass
             const user = await DB.instance
                 .insert(users)
                 .values({
@@ -56,13 +57,11 @@ export default abstract class UserController {
                 })
                 .returning({
                     uuid: users.uuid,
-                    clubId: users.clubId,
+                    email: users.email,
                     username: users.username,
                     avatarUrl: users.avatarUrl,
-                    createdAt: users.createdAt,
-                    updatedAt: users.updatedAt,
+                    clubId: users.clubId,
                     quote: users.quote,
-                    email: users.email
                 });
 
             return user[0];
@@ -72,15 +71,24 @@ export default abstract class UserController {
         }
     }
 
-    public static async updateUser(username?: string, avatarUrl?: string) {
+    public static async updateUser(uuid: string, username?: string, avatarUrl?: string, quote?: string) {
         try {
             const user = await DB.instance
                 .update(users)
                 .set({
                     username: username,
-                    avatarUrl: avatarUrl
+                    avatarUrl: avatarUrl,
+                    quote: quote,
                 })
-                .returning();
+                .where(eq(users.uuid, uuid))
+                .returning({
+                    uuid: users.uuid,
+                    email: users.email,
+                    username: users.username,
+                    clubId: users.clubId,
+                    avatarUrl: users.avatarUrl,
+                    quote: users.quote,
+                });
 
             return user[0];
         } catch (error) {
