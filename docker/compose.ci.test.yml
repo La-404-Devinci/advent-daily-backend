@@ -18,6 +18,19 @@ services:
             MINIO_ROOT_PASSWORD: minio
             MINIO_HOST: minio
             MINIO_DEFAULT_BUCKETS: george
+
+            JWT_SECRET: secret
+
+            ADMIN_TOKEN: super_admin_token
+
+            MAIL_SERVER: mail_server
+            MAIL_PORT: 587
+            MAIL_USER: mail_user
+            MAIL_PASSWORD: mail_pass
+            MAIL_FROM: mail_from <mail_from>
+
+            MAIL_REDIRECT_URL: http://localhost:1337/auth/confirm#{token}
+            PROFILE_REDIRECT_URL: http://localhost:1337/profile/{uuid}
         depends_on:
             - postgres
 

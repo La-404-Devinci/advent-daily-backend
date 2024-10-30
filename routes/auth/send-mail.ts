@@ -55,7 +55,7 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         });
     }
 
-    if (!(await UserController.existsUserByEmail(bodyPayload.data.email))) {
+    if (await UserController.existsUserByEmail(bodyPayload.data.email)) {
         return Status.send(req, next, {
             status: 409,
             error: "errors.auth.conflict.email"

@@ -29,10 +29,10 @@ export const envSchema = z.object({
     MAIL_SERVER: z.string().default("smtp.example.com"),
     MAIL_PORT: znumber().default("587"),
     MAIL_SECURE: zboolean().default("true"),
-    MAIL_USER: z.string().default(""),
-    MAIL_PASSWORD: z.string().default(""),
-    MAIL_FROM: z.string().default(""),
+    MAIL_USER: z.string().default("user"),
+    MAIL_PASSWORD: z.string().default("password"),
+    MAIL_FROM: z.string().default("system <user@example.com>"),
 
-    MAIL_REDIRECT_URL: z.string().default(""),
-    PROFILE_REDIRECT_URL: z.string().default("")
+    MAIL_REDIRECT_URL: z.string().default("http://localhost:1337/auth/confirm#{token}"),
+    PROFILE_REDIRECT_URL: z.string().default("http://localhost:1337/profile/{uuid}")
 });
