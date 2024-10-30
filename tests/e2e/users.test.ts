@@ -53,7 +53,7 @@ describe("Test users", () => {
                         clubId: null,
                         avatarUrl: null,
                         quote: null,
-                        username: "test-users",
+                        username: "test-users"
                     }
                 }
             ]

@@ -12,7 +12,7 @@ export default abstract class UserController {
                 username: users.username,
                 avatarUrl: users.avatarUrl,
                 clubId: users.clubId,
-                quote: users.quote,
+                quote: users.quote
             })
             .from(users)
             .where(eq(users.uuid, uuid))
@@ -61,7 +61,7 @@ export default abstract class UserController {
                     username: users.username,
                     avatarUrl: users.avatarUrl,
                     clubId: users.clubId,
-                    quote: users.quote,
+                    quote: users.quote
                 });
 
             return user[0];
@@ -78,7 +78,7 @@ export default abstract class UserController {
                 .set({
                     username: username,
                     avatarUrl: avatarUrl,
-                    quote: quote,
+                    quote: quote
                 })
                 .where(eq(users.uuid, uuid))
                 .returning({
@@ -87,7 +87,7 @@ export default abstract class UserController {
                     username: users.username,
                     clubId: users.clubId,
                     avatarUrl: users.avatarUrl,
-                    quote: users.quote,
+                    quote: users.quote
                 });
 
             return user[0];

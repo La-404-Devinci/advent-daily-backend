@@ -27,7 +27,7 @@ export default async function Route_Users_Create(req: Request, res: Response, ne
 
     const token = bodyPayload.data.token;
     const tokenPayload = AuthController.validateCreationToken(token);
-    
+
     if (!tokenPayload) {
         return Status.send(req, next, {
             status: 400,
