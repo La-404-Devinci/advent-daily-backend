@@ -1,4 +1,5 @@
 import AuthController from "@/controllers/auth";
+import CypherController from "@/controllers/cypher";
 import UserController from "@/controllers/users";
 import Status from "@/models/status";
 import { NextFunction, Request, Response } from "express";
@@ -54,7 +55,7 @@ export default async function Route_Users_Create(req: Request, res: Response, ne
     const user = await UserController.createUser(
         bodyPayload.data.username,
         bodyPayload.data.email,
-        bodyPayload.data.password
+        CypherController.hashPassword(bodyPayload.data.password)
     );
 
     if (!user) {
