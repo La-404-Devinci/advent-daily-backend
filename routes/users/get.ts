@@ -8,25 +8,25 @@ const params = z.object({
 });
 
 export default async function Route_Users_Get(req: Request, res: Response, next: NextFunction) {
-  const payload = params.safeParse(req.params);
-  if (!payload.success) {
+    const payload = params.safeParse(req.params);
+    if (!payload.success) {
+        return Status.send(req, next, {
+            status: 400,
+            error: "errors.validation"
+        });
+    }
+
+    const user = await UserController.getUser(payload.data.id);
+
+    if (!user) {
+        return Status.send(req, next, {
+            status: 404,
+            error: "errors.notFound"
+        });
+    }
+
     return Status.send(req, next, {
-      status: 400,
-      error: "errors.validation"
+        status: 200,
+        data: user
     });
-  }
-
-  const user = await UserController.getUser(payload.data.id);
-
-  if (!user) {
-    return Status.send(req, next, {
-      status: 404,
-      error: "errors.notFound"
-    });
-  }
-
-  return Status.send(req, next, {
-    status: 200,
-    data: user
-  });
 }
