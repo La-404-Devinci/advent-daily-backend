@@ -4,7 +4,7 @@
     "database": "Database error",
     "auth": {
         "admin": "Invalid X-ADMIN-KEY header",
-        "toomany": "Too many results",
+        "toomany": "Too many requests",
         "invalid": {
             "token": "Invalid token",
             "credentials": "Invalid credentials",
