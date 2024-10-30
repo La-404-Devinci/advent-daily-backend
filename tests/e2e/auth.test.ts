@@ -44,7 +44,7 @@ describe("Test authentication", () => {
         });
     });
 
-    let userId: string;
+    let userUuid: string;
 
     test("should create a user", async () => {
         const res = await post(app, "/users", {
@@ -62,8 +62,11 @@ describe("Test authentication", () => {
                     status: 201,
                     success: true,
                     data: {
-                        id: expect.any(Number),
+                        avatarUrl: null,
+                        clubId: null,
+                        uuid: expect.any(String),
                         email: email,
+                        quote: null,
                         username: "test",
                         createdAt: expect.any(String),
                         updatedAt: expect.any(String)
@@ -72,13 +75,13 @@ describe("Test authentication", () => {
             ]
         });
 
-        userId = res.body.response[0].data.id;
+        userUuid = res.body.response[0].data.uuid;
     });
 
     const authToken = AuthController.generateAuthToken(email);
 
     test("should login a user", async () => {
-        const res = await post(app, "/login", {
+        const res = await post(app, "/auth/login", {
             email: email,
             password: "password"
         });
@@ -97,7 +100,7 @@ describe("Test authentication", () => {
     });
 
     test("should get 'invalid credentials' error", async () => {
-        const res = await post(app, "/login", {
+        const res = await post(app, "/auth/login", {
             email: email,
             password: "wrong-password"
         });
@@ -117,7 +120,7 @@ describe("Test authentication", () => {
     });
 
     test("should get the authenticated user", async () => {
-        const meRes = await get(app, "/me", undefined, undefined, {
+        const meRes = await get(app, "/auth/me", undefined, undefined, {
             Authorization: `Bearer ${authToken}`
         });
 
@@ -128,14 +131,14 @@ describe("Test authentication", () => {
                 {
                     status: 200,
                     success: true,
-                    data: userId
+                    data: userUuid
                 }
             ]
         });
     });
 
     test("should get 'unauthorized' error", async () => {
-        const res = await get(app, "/me", undefined, undefined, {
+        const res = await get(app, "/auth/me", undefined, undefined, {
             Authorization: `Bearer invalid-token`
         });
 
@@ -146,8 +149,8 @@ describe("Test authentication", () => {
                 {
                     status: 401,
                     success: false,
-                    error: "errors.auth.invalid",
-                    translatedError: "Invalid credentials"
+                    error: "errors.auth.unauthorized",
+                    translatedError: "You must be logged in"
                 }
             ]
         });

@@ -14,13 +14,23 @@ const body = z.object({
      * - It must end with @edu.devinci.fr
      * - It must be a valid email
      */
-    email: z.string().regex(/^[a-zA-Z0-9._%+-]+@edu\.devinci\.fr$/)
+    email: z.string()
 });
 
 export default async function Route_Auth_Sendmail(req: Request, res: Response, next: NextFunction) {
     const bodyPayload = body.safeParse(req.body);
 
     if (!bodyPayload.success) {
+        return Status.send(req, next, {
+            status: 400,
+            error: "errors.validation"
+        });
+    }
+
+    if (
+        globals.env.NODE_ENV !== "production" &&
+        /^[a-zA-Z0-9._%+-]+@edu\.devinci\.fr$/.test(bodyPayload.data.email) === false
+    ) {
         return Status.send(req, next, {
             status: 400,
             error: "errors.validation"

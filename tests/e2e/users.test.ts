@@ -116,7 +116,7 @@ describe("Test users", () => {
     test("should edit the user", async () => {
         const res = await put(
             app,
-            "/users/:id",
+            "/users/:uuid",
             {
                 uuid: userUuid
             },
@@ -141,7 +141,7 @@ describe("Test users", () => {
     });
 
     test("should get the user", async () => {
-        const res = await get(app, "/users/:id", { uuid: userUuid }, undefined, {
+        const res = await get(app, "/users/:uuid", { uuid: userUuid }, undefined, {
             Authorization: `Bearer ${authToken}`
         });
 
