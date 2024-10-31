@@ -11,10 +11,32 @@ services:
               required: false
         environment:
             NODE_ENV: test
+            SILENT: ${SILENT:-false}
+
             POSTGRES_DB: postgres
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             POSTGRES_HOST: postgres
+
+            REDIS_HOST: redis
+
+            MINIO_ROOT_USER: minio
+            MINIO_ROOT_PASSWORD: minio
+            MINIO_HOST: minio
+            MINIO_DEFAULT_BUCKETS: george
+
+            JWT_SECRET: secret
+
+            ADMIN_TOKEN: super_admin_token
+
+            MAIL_SERVER: mail_server
+            MAIL_PORT: 587
+            MAIL_USER: mail_user
+            MAIL_PASSWORD: mail_pass
+            MAIL_FROM: mail_from <mail_from>
+
+            MAIL_REDIRECT_URL: http://localhost:1337/auth/confirm#{token}
+            PROFILE_REDIRECT_URL: http://localhost:1337/profile/{uuid}
         depends_on:
             - postgres
 
@@ -25,3 +47,13 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             POSTGRES_HOST: postgres
+
+    redis:
+        image: redis:7.4
+
+    minio:
+        image: "minio/minio:latest"
+        environment:
+            MINIO_ROOT_USER: minio
+            MINIO_ROOT_PASSWORD: minio
+            MINIO_DEFAULT_BUCKETS: george

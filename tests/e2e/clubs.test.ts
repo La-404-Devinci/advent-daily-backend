@@ -10,7 +10,26 @@ const testGlobals = {
     challengedId: 0
 };
 
-describe("Test users", () => {
+describe("Test clubs", () => {
+    test("should get permission denied", async () => {
+        const res = await get(app, "/admin/clubs", undefined, undefined, {
+            "X-ADMIN-KEY": "definitely wrong"
+        });
+
+        expect(res.body).toStrictEqual({
+            masterStatus: 401,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 401,
+                    success: false,
+                    error: "errors.auth.admin",
+                    translatedError: "Invalid X-ADMIN-KEY header"
+                }
+            ]
+        });
+    });
+
     test("should create a non-challenger club", async () => {
         const res = await post(
             app,

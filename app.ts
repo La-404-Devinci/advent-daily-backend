@@ -3,12 +3,13 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import middlewareI18n from "./middlewares/i18n";
 import Logger from "./log/logger";
-import routes from "./routes";
+import routes from "./routes/router";
 import Status from "./models/status";
 import { logIncoming, logOutgoing } from "./middlewares/log";
 import middlewareCore from "./middlewares/core";
 import loadEnv from "./env/loader";
-import { initDatabase } from "./database/config";
+import middlewareUser from "./middlewares/auth/user";
+import { initDatabase } from "./database/init";
 
 export default (logSuffix?: string, initDb = true) => {
     if (initDb) {
@@ -27,6 +28,7 @@ export default (logSuffix?: string, initDb = true) => {
     app.use(cookieParser());
 
     app.use(middlewareI18n);
+    app.use(middlewareUser);
 
     app.use(logIncoming);
     app.use(routes);

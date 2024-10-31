@@ -3,6 +3,18 @@
     "validation": "Validation error",
     "database": "Database error",
     "auth": {
-        "admin": "Invalid X-ADMIN-KEY header"
+        "admin": "Invalid X-ADMIN-KEY header",
+        "toomany": "Too many requests",
+        "invalid": {
+            "token": "Invalid token",
+            "credentials": "Invalid credentials",
+            "email": "Invalid email"
+        },
+        "conflict": {
+            "unknown": "Unknown conflict",
+            "email": "Email already in use",
+            "username": "Username already in use"
+        },
+        "unauthorized": "You must be logged in"
     }
 }

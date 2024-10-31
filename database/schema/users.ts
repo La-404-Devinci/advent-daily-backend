@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, serial, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 import { acquired } from "./acquired";
 import { clubs } from "./clubs";
 
@@ -7,10 +7,11 @@ export const users = pgTable(
     "users",
     {
         uuid: uuid("uuid").primaryKey().defaultRandom(),
-        clubId: serial("club_id"),
+        clubId: integer("club_id"),
         email: text("email").notNull(),
         hashpass: text("hashpass").notNull(),
         username: text("username").notNull(),
+        avatarUrl: text("avatar_url"),
         quote: text("quote"),
         updatedAt: timestamp("updated_at")
             .defaultNow()

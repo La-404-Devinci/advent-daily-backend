@@ -1,10 +1,15 @@
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import loadEnv from "./env/loader";
-import DB, { initDatabase } from "./database/config";
+import DB from "./database/config";
+import { initDatabase } from "./database/init";
 // import globals from "./env/env";
 
 export default async () => {
     loadEnv();
-    initDatabase();
+    const dbTeardownFunc = initDatabase();
     await migrate(DB.instance, { migrationsFolder: "./database/migrations" });
+
+    return () => {
+        dbTeardownFunc();
+    };
 };

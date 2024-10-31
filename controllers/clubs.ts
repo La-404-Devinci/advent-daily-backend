@@ -7,6 +7,7 @@ export default abstract class ClubController {
     public static async getAllClubs() {
         const allClubs = await DB.instance
             .select({
+                id: clubs.id,
                 avatarUrl: clubs.avatarUrl,
                 name: clubs.name
             })
@@ -34,6 +35,7 @@ export default abstract class ClubController {
     public static async getClub(id: number) {
         const club = await DB.instance
             .select({
+                id: clubs.id,
                 avatarUrl: clubs.avatarUrl,
                 name: clubs.name
             })

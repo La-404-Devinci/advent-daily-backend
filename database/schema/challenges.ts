@@ -6,7 +6,7 @@ import { granters } from "./granters";
 
 export const challenges = pgTable("challenges", {
     id: serial("id").primaryKey(),
-    clubId: serial("club_id"),
+    clubId: integer("club_id"),
     score: integer("score").notNull(),
     name: text("name").notNull(),
     updatedAt: timestamp("updated_at")

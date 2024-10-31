@@ -2,29 +2,43 @@
 cd "$(dirname "$0")/.."
 
 file="docker/compose.test.yml"
+silent="false"
 
 # Check if --ci flag is passed
 if [ "$1" = "--ci" ]; then
     file="docker/compose.ci.test.yml"
 fi
 
+# Check if --silent flag is passed
+if [ "$2" = "--silent" ]; then
+    silent="true"
+fi
+
+out () {
+    if [ "$silent" = "true" ]; then
+        "$@" > /dev/null 2>&1
+    else
+        "$@"
+    fi
+}
+
 # Cleanup
-echo "Cleaning up previous tests..."
-docker compose -f $file rm -s -f -v
+out echo "Cleaning up previous tests..."
+out docker compose -f $file rm -s -f -v 
 
 # Run tests
-echo "Building and running tests..."
-docker compose -f $file up --build -d --force-recreate --remove-orphans --renew-anon-volumes
+out echo "Building and running tests..."
+SILENT=$silent out docker compose -f $file up --build -d --force-recreate --remove-orphans --renew-anon-volumes
 
-echo "Attaching tests..."
+out echo "Attaching tests..."
 docker compose -f $file attach test
 result=$?
 
-echo "Result: $result"
+out echo "Result: $result"
 
 # Cleanup
-echo "Cleaning up tests..."
-docker compose -f $file rm -s -f -v
+out echo "Cleaning up tests..."
+out docker compose -f $file rm -s -f -v
 
 # Open coverage report
 if [ "$1" != "--ci" ]; then
