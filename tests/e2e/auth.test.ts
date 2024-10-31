@@ -7,7 +7,7 @@ const app = createApp("e2e-auth");
 
 describe("Test authentication", () => {
     const email = "test-auth@no-reply.local";
-    const token = AuthController.generateCreationToken(email);
+    const token = AuthController.generateCreationToken(email, false);
     const redirectUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", token);
 
     test("should send an email", async () => {
