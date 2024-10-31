@@ -4,7 +4,9 @@ import { clubs } from "./clubs";
 
 export const granters = pgTable("granters", {
     id: serial("id").primaryKey(),
-    clubId: integer("club_id").notNull(),
+    clubId: integer("club_id")
+        .notNull()
+        .references(() => clubs.id),
     email: text("email").notNull(),
     password: text("password").notNull()
 });

@@ -7,7 +7,7 @@ export const users = pgTable(
     "users",
     {
         uuid: uuid("uuid").primaryKey().defaultRandom(),
-        clubId: integer("club_id"),
+        clubId: integer("club_id").references(() => clubs.id),
         email: text("email").notNull(),
         hashpass: text("hashpass").notNull(),
         username: text("username").notNull(),

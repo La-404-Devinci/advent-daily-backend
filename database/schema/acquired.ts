@@ -6,8 +6,12 @@ import { challenges } from "./challenges";
 export const acquired = pgTable(
     "acquired",
     {
-        userUuid: uuid("user_uuid").notNull(),
-        challengeId: integer("challenge_id").notNull(),
+        userUuid: uuid("user_uuid")
+            .notNull()
+            .references(() => users.uuid),
+        challengeId: integer("challenge_id")
+            .notNull()
+            .references(() => challenges.id),
         createdBy: integer("created_by"),
         updatedAt: timestamp("updated_at")
             .defaultNow()
