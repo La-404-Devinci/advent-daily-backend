@@ -8,10 +8,10 @@ export const acquired = pgTable(
     {
         userUuid: uuid("user_uuid")
             .notNull()
-            .references(() => users.uuid),
+            .references(() => users.uuid, { onDelete: "cascade", onUpdate: "cascade" }),
         challengeId: integer("challenge_id")
             .notNull()
-            .references(() => challenges.id),
+            .references(() => challenges.id, { onDelete: "cascade", onUpdate: "cascade" }),
         createdBy: integer("created_by"),
         updatedAt: timestamp("updated_at")
             .defaultNow()
