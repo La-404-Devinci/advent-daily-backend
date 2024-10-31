@@ -10,16 +10,8 @@ describe("Test authentication", () => {
     const token = AuthController.generateCreationToken(email);
     const redirectUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", token);
 
-    beforeAll(() => {
-        AuthController.fakeTime = true;
-    });
-
-    afterAll(() => {
-        AuthController.fakeTime = false;
-    });
-
     test("should send an email", async () => {
-        // We use X-ADMIN-KEY to fetch back the redirect URL
+        // We use X-ADMIN-KEY to fetch back the redirect URL without expiration
         const res = await post(app, "/auth/send-mail", { email: email }, { "X-ADMIN-KEY": globals.env.ADMIN_TOKEN });
 
         expect(res.body).toStrictEqual({

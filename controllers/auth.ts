@@ -10,11 +10,11 @@ export default abstract class AuthController {
      * @param email The email of the user
      * @returns The creation token
      */
-    public static generateCreationToken(email: string): string {
+    public static generateCreationToken(email: string, shouldExpire = true): string {
         return sign(
             { email: email, type: "creation" },
             globals.env.JWT_SECRET,
-            this.fakeTime ? undefined : { expiresIn: "15s" }
+            shouldExpire ? { expiresIn: "15s" } : undefined
         );
     }
 

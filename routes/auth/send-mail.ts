@@ -62,7 +62,7 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         });
     }
 
-    const creationToken = AuthController.generateCreationToken(bodyPayload.data.email);
+    const creationToken = AuthController.generateCreationToken(bodyPayload.data.email, !isAdmin(req));
     const creationUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", creationToken);
 
     try {
