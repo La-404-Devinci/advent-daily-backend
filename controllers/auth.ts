@@ -14,7 +14,7 @@ export default abstract class AuthController {
         return sign(
             { email: email, type: "creation" },
             globals.env.JWT_SECRET,
-            this.fakeTime ? { expiresIn: "15s" } : undefined
+            this.fakeTime ? undefined : { expiresIn: "15s" }
         );
     }
 
