@@ -64,11 +64,10 @@ export default abstract class ChallengesController {
     return challenge.length ? challenge[0] : null;
   }
 
-  public static async updateChallenge(id: number, clubId: number, score: number, name: string) {
+  public static async updateChallenge(id: number, score?: number, name?: string) {
     const challenge = await DB.instance
       .update(challenges)
       .set({
-        clubId,
         score,
         name,
       })

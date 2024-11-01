@@ -9,7 +9,7 @@ import usersRouter from "./users/router";
 const router = Router();
 
 router.get("/", Route_Index_Read);
-router.get("/daily", dailyRouter);
+router.use("/daily", dailyRouter);
 
 router.use("/clubs", clubsRouter);
 router.use("/auth", authRouter);

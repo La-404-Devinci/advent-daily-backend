@@ -1,10 +1,11 @@
 import ChallengesController from "@/controllers/challenges";
+import { znumber } from "@/env/extras";
 import Status from "@/models/status";
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const params = z.object({
-  id: z.number()
+  id: znumber()
 })
 
 export default async function Route_AdminChallenges_Delete(req: Request, res: Response, next: NextFunction) {

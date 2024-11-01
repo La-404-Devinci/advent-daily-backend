@@ -9,9 +9,8 @@ const params = z.object({
 });
 
 const body = z.object({
-  clubId: z.number(),
-  score: z.number(),
-  name: z.string(),
+  score: z.number().optional(),
+  name: z.string().optional(),
 })
 
 export default async function Route_AdminChallenges_Update(req: Request, res: Response, next: NextFunction) {
@@ -36,7 +35,6 @@ export default async function Route_AdminChallenges_Update(req: Request, res: Re
 
   const updatedChallenge = await ChallengesController.updateChallenge(
     paramsPayload.data.id,
-    bodyPayload.data.clubId,
     bodyPayload.data.score,
     bodyPayload.data.name,
   );
@@ -50,6 +48,6 @@ export default async function Route_AdminChallenges_Update(req: Request, res: Re
 
   return Status.send(req, next, {
     status: 200,
-    data: challenge
+    data: updatedChallenge
   });
 } 
