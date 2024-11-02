@@ -14,7 +14,7 @@ export default async function Route_DailyChallenges_Get(req: Request, res: Respo
         return Status.send(req, next, {
             status: 404,
             error: "errors.notFound"
-        })
+        });
     }
 
     return Status.send(req, next, {

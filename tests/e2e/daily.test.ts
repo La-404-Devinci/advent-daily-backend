@@ -6,11 +6,10 @@ import { get, post } from "../utils";
 const app = createApp("e2e-daily");
 
 const testGlobals = {
-    clubId: 0,
+    clubId: 0
 };
 
 describe("Daily challenges", () => {
-
     test("should create a daily club and challenge", async () => {
         const resClub = await post(
             app,
@@ -57,9 +56,7 @@ describe("Daily challenges", () => {
                 }
             ]
         });
-
     });
-
 
     test("should get daily club", async () => {
         const res = await get(app, "/daily");
@@ -79,7 +76,6 @@ describe("Daily challenges", () => {
                 }
             ]
         });
-
     });
 
     test("should get daily challenges", async () => {
@@ -103,5 +99,4 @@ describe("Daily challenges", () => {
             ]
         });
     });
-
 });

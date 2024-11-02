@@ -90,12 +90,12 @@ export default abstract class ChallengesController {
             .select({
                 id: challenges.id,
                 name: challenges.name,
-                score: challenges.score,
+                score: challenges.score
             })
             .from(challenges)
             .innerJoin(clubs, eq(challenges.clubId, clubs.id))
             .where(eq(clubs.dailyDate, new Date()));
 
-        return dailyChallenges
+        return dailyChallenges;
     }
 }
