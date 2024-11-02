@@ -4,9 +4,9 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const body = z.object({
-  clubId: z.number(),
-  score: z.number(),
-  name: z.string(),
+    clubId: z.number(),
+    score: z.number(),
+    name: z.string()
 });
 
 export default async function Route_AdminChallenges_Create(req: Request, res: Response, next: NextFunction) {
@@ -22,7 +22,7 @@ export default async function Route_AdminChallenges_Create(req: Request, res: Re
     const challenge = await ChallengesController.createChallenge(
         bodyPayload.data.clubId,
         bodyPayload.data.score,
-        bodyPayload.data.name,
+        bodyPayload.data.name
     );
 
     if (!challenge) {

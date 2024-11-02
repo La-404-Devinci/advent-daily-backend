@@ -1,27 +1,27 @@
 {
-  "version": "7",
-  "dialect": "postgresql",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "7",
-      "when": 1730298717234,
-      "tag": "0000_fair_nextwave",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1730395641724,
-      "tag": "0001_low_layla_miller",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1730396012322,
-      "tag": "0002_worried_ted_forrester",
-      "breakpoints": true
-    }
-  ]
+    "version": "7",
+    "dialect": "postgresql",
+    "entries": [
+        {
+            "idx": 0,
+            "version": "7",
+            "when": 1730298717234,
+            "tag": "0000_fair_nextwave",
+            "breakpoints": true
+        },
+        {
+            "idx": 1,
+            "version": "7",
+            "when": 1730395641724,
+            "tag": "0001_low_layla_miller",
+            "breakpoints": true
+        },
+        {
+            "idx": 2,
+            "version": "7",
+            "when": 1730396012322,
+            "tag": "0002_worried_ted_forrester",
+            "breakpoints": true
+        }
+    ]
 }

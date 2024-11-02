@@ -1,4 +1,3 @@
-
 /**
  * Handles the /daily/challenges route.
  * Retrieves the daily challenges information.
