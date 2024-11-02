@@ -148,7 +148,7 @@ describe("Test clubs", () => {
                 name: "challenged",
                 avatarUrl: "https://placehold.co/400",
                 description: "description",
-                dailyDate: toDateString()
+                dailyDate: toDateString(new Date("2024-10-31"))
             },
             {
                 "X-ADMIN-KEY": globals.env.ADMIN_TOKEN
@@ -169,7 +169,7 @@ describe("Test clubs", () => {
                             avatarUrl: "https://placehold.co/400",
                             name: "challenged",
                             description: "description",
-                            dailyDate: toDateISOString(),
+                            dailyDate: toDateISOString(new Date("2024-10-31")),
                             createdAt: expect.any(String),
                             updatedAt: expect.any(String)
                         }
