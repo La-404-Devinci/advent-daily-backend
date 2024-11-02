@@ -1,12 +1,13 @@
 import createApp from "@/app";
 import globals from "@/env/env";
+import { toDateString } from "@/utils/date";
 import { del, get, post, put } from "../utils";
 
 const app = createApp("e2e-challenges");
 
 const testGlobals = {
-    testId: 0,
-    challengedId: 0
+  clubId: 0,
+  challengedId: 0,
 };
 
 describe("Test challenges", () => {
@@ -30,9 +31,26 @@ describe("Test challenges", () => {
     });
   });
 
-  test("should create a challenge", async () => {
+  test("should create a club and challenge", async () => {
+
+    const resClub = await post(
+      app,
+      "/admin/clubs",
+      {
+          name: "challenge club test",
+          avatarUrl: "https://placehold.co/400",
+          description: "description",
+          dailyDate: toDateString(new Date("2024-11-01"))
+      },
+      {
+          "X-ADMIN-KEY": globals.env.ADMIN_TOKEN
+      }
+    );
+
+    testGlobals.clubId = resClub.body.response[0].data.id ?? "invalid";
+    
     const res = await post(app, "/admin/challenges", {
-      clubId: 1,
+      clubId: testGlobals.clubId,
       score: 100,
       name: "test challenge"
     }, {
@@ -50,7 +68,7 @@ describe("Test challenges", () => {
             id: expect.any(Number),
             score: 100,
             name: "test challenge",
-            clubId: 1,
+            clubId: testGlobals.clubId,
           }
         }
       ]
@@ -81,7 +99,7 @@ describe("Test challenges", () => {
             id: testGlobals.challengedId,
             score: 100,
             name: "edited challenge",
-            clubId: 1,
+            clubId: testGlobals.clubId,
           }
         }
       ]
@@ -105,7 +123,7 @@ describe("Test challenges", () => {
               id: expect.any(Number),
               score: 100,
               name: "edited challenge",
-              clubId: 1,
+              clubId: testGlobals.clubId,
             }
           ])
         }
