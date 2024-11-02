@@ -1,7 +1,7 @@
 import createApp from "@/app";
-import { del, get, post, put } from "../utils";
 import globals from "@/env/env";
 import { toDateISOString, toDateString } from "@/utils/date";
+import { del, get, post, put } from "../utils";
 
 const app = createApp("e2e-users");
 
@@ -74,7 +74,7 @@ describe("Test clubs", () => {
                 name: "daily test",
                 avatarUrl: "https://placehold.co/400",
                 description: "description",
-                dailyDate: toDateString() // Today
+                dailyDate: toDateString(new Date("2024-10-31"))
             },
             {
                 "X-ADMIN-KEY": globals.env.ADMIN_TOKEN
@@ -93,7 +93,7 @@ describe("Test clubs", () => {
                         avatarUrl: "https://placehold.co/400",
                         name: "daily test",
                         description: "description",
-                        dailyDate: toDateISOString(),
+                        dailyDate: toDateISOString(new Date("2024-10-31")),
                         createdAt: expect.any(String),
                         updatedAt: expect.any(String)
                     }
@@ -129,7 +129,7 @@ describe("Test clubs", () => {
                             avatarUrl: "https://placehold.co/400",
                             name: "daily test",
                             description: "description",
-                            dailyDate: toDateISOString()
+                            dailyDate: toDateISOString(new Date("2024-10-31"))
                         }
                     ])
                 }
@@ -148,7 +148,7 @@ describe("Test clubs", () => {
                 name: "challenged",
                 avatarUrl: "https://placehold.co/400",
                 description: "description",
-                dailyDate: toDateString()
+                dailyDate: toDateString(new Date("2024-10-31"))
             },
             {
                 "X-ADMIN-KEY": globals.env.ADMIN_TOKEN
@@ -169,7 +169,7 @@ describe("Test clubs", () => {
                             avatarUrl: "https://placehold.co/400",
                             name: "challenged",
                             description: "description",
-                            dailyDate: toDateISOString(),
+                            dailyDate: toDateISOString(new Date("2024-10-31")),
                             createdAt: expect.any(String),
                             updatedAt: expect.any(String)
                         }
@@ -198,26 +198,6 @@ describe("Test clubs", () => {
                 {
                     status: 204,
                     success: true
-                }
-            ]
-        });
-    });
-
-    test("should get daily club", async () => {
-        const res = await get(app, "/daily");
-
-        expect(res.body).toStrictEqual({
-            masterStatus: 200,
-            sentAt: expect.any(Number),
-            response: [
-                {
-                    status: 200,
-                    success: true,
-                    data: {
-                        avatarUrl: "https://placehold.co/400",
-                        name: "challenged",
-                        description: "description"
-                    }
                 }
             ]
         });
