@@ -1,5 +1,6 @@
 import DB from "@/database/config";
 import { challenges } from "@/database/schema/challenges";
+import { clubs } from "@/database/schema/clubs";
 import { eq } from "drizzle-orm";
 
 export default abstract class ChallengesController {
@@ -84,5 +85,17 @@ export default abstract class ChallengesController {
         await DB.instance.delete(challenges).where(eq(challenges.id, id));
     }
 
-    public static async getDailyChallenges() {}
+    public static async getDailyChallenges() {
+        const dailyChallenges = await DB.instance
+            .select({
+                id: challenges.id,
+                name: challenges.name,
+                score: challenges.score,
+            })
+            .from(challenges)
+            .innerJoin(clubs, eq(challenges.clubId, clubs.id))
+            .where(eq(clubs.dailyDate, new Date()));
+
+        return dailyChallenges
+    }
 }
