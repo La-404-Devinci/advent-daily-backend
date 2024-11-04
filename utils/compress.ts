@@ -1,30 +1,18 @@
-import Compressor from "compressorjs";
+import sharp from "sharp";
 
-const compress: (data: Blob) => Promise<string> = async (data: Blob) => {
-    return new Promise((resolve, reject) => {
-        new Compressor(data, {
-            quality: 0.6,
-            maxHeight: 512,
-            maxWidth: 512,
-            height: 512,
-            width: 512,
-            resize: "cover",
-            convertTypes: "image/webp",
-            success(result) {
-                result
-                    .text()
-                    .then((text) => {
-                        resolve(text);
-                    })
-                    .catch((err) => {
-                        reject(err);
-                    });
-            },
-            error(err) {
-                reject(err);
-            }
-        });
-    });
+const compress: (data: string) => Promise<string> = async (data) => {
+    const inputBuffer = Buffer.from(data, "base64");
+
+    const outputBuffer = await sharp(inputBuffer)
+        .resize(512, 512, {
+            fit: "cover",
+            position: "center"
+        })
+        .jpeg({ quality: 60, force: true })
+        .toFormat("jpeg")
+        .toBuffer();
+
+    return outputBuffer.toString("base64");
 };
 
 export default compress;
