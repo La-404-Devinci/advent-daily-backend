@@ -6,6 +6,7 @@ services:
         ports:
             - "0.0.0.0:3000:3000"
         volumes:
+            - /data/app/node_modules
             - ..:/data/app
         environment:
             NODE_ENV: development
