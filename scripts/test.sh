@@ -41,10 +41,10 @@ out echo "Cleaning up tests..."
 out docker compose -f $file rm -s -f -v
 
 # Open coverage report
-if [ "$1" != "--ci" ]; then
-    echo "Opening coverage report..."
-    open ./coverage/cov/lcov-report/index.html
-fi
+# if [ "$1" != "--ci" ]; then
+#     echo "Opening coverage report..."
+#     open ./coverage/cov/lcov-report/index.html
+# fi
 
 # Return result
 exit $result
