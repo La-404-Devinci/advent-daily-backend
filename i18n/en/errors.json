@@ -2,6 +2,7 @@
     "template": "This is a template error message",
     "validation": "Validation error",
     "database": "Database error",
+    "image": "Invalid image",
     "auth": {
         "admin": "Invalid X-ADMIN-KEY header",
         "toomany": "Too many requests",
