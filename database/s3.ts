@@ -29,18 +29,17 @@ export default abstract class S3 {
 
     /**
      * Uploads a compressed image to Minio as a base64 string.
-     * @param {Blob} data The image data.
+     * @param {string} data The base64 string of the image.
      * @param {string} options.path The path to upload the image to.
      * @param {string} options.creator The creator of the image.
      * @returns {Promise<string | null>} The path of the uploaded image.
      */
-    public static async putImage(data: Blob, options?: { path?: string; creator?: string }): Promise<string | null> {
+    public static async putImage(data: string, options?: { path?: string; creator?: string }): Promise<string | null> {
         try {
             const imagePath = options?.path ?? randomUUID();
+            const image = await compress(data);
 
-            const compressedData = await compress(data);
-            const buffer = Buffer.from(compressedData, "base64");
-            await S3.client.putObject(globals.env.MINIO_DEFAULT_BUCKETS, imagePath, buffer, compressedData.length, {
+            await S3.client.putObject(globals.env.MINIO_DEFAULT_BUCKETS, imagePath, image, image.length, {
                 "Content-Type": "application/octet-stream",
                 "Last-Modified": new Date().toUTCString(),
                 "x-amz-acl": "public-read",
@@ -60,23 +59,28 @@ export default abstract class S3 {
      * @returns {Promise<string | null>}
      */
     public static async getImage(path: string): Promise<string | null> {
-        const data: internal.Readable = await S3.client.getObject(globals.env.MINIO_DEFAULT_BUCKETS, path);
-        if (!data) return null;
+        try {
+            const data: internal.Readable = await S3.client.getObject(globals.env.MINIO_DEFAULT_BUCKETS, path);
+            if (!data) return null;
 
-        const buffer = await new Promise<Buffer>((resolve, reject) => {
-            const chunks: Buffer[] = [];
-            data.on("data", (chunk: Buffer) => {
-                chunks.push(chunk);
-            })
-                .on("end", () => {
-                    resolve(Buffer.concat(chunks));
+            const buffer = await new Promise<Buffer>((resolve, reject) => {
+                const chunks: Buffer[] = [];
+                data.on("data", (chunk: Buffer) => {
+                    chunks.push(chunk);
                 })
-                .on("error", (err) => {
-                    reject(err);
-                });
-        });
+                    .on("end", () => {
+                        resolve(Buffer.concat(chunks));
+                    })
+                    .on("error", (err) => {
+                        reject(err);
+                    });
+            });
 
-        return buffer.toString("base64");
+            return buffer.toString("base64");
+        } catch (err) {
+            Logger.error("s3.ts::getImage | Error getting image", err);
+            return null;
+        }
     }
 
     /**

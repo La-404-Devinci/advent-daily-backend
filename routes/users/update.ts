@@ -60,7 +60,7 @@ export default async function Route_Users_Update(req: Request, res: Response, ne
         if (!avatarUrl) {
             return Status.send(req, next, {
                 status: 500,
-                error: "errors.image"
+                error: "errors.image.invalid"
             });
         }
     }

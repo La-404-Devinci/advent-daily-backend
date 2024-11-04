@@ -21,7 +21,7 @@ export default async function Route_Blob_Read(req: Request, res: Response, next:
     if (!data) {
         return Status.send(req, next, {
             status: 404,
-            error: "errors.notFound"
+            error: "errors.image.notFound"
         });
     }
 
