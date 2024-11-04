@@ -6,6 +6,7 @@ services:
         ports:
             - "0.0.0.0:3000:3000"
         volumes:
+            - /data/app/node_modules
             - ..:/data/app
         environment:
             NODE_ENV: development
@@ -17,27 +18,32 @@ services:
             REDIS_HOST: redis
 
             MINIO_ROOT_USER: minio
-            MINIO_ROOT_PASSWORD: minio
+            MINIO_ROOT_PASSWORD: password
             MINIO_HOST: minio
             MINIO_DEFAULT_BUCKETS: george
         stdin_open: true
         tty: true
         depends_on:
             - postgres
+            - redis
+            - minio
 
     redis:
         image: redis:7.4
         ports:
-            - "0.0.0.0:6379:6379"
+            - "0.0.0.0:3001:6379"
 
     minio:
-        image: minio/minio
+        image: bitnami/minio
         environment:
             MINIO_ROOT_USER: minio
-            MINIO_ROOT_PASSWORD: minio
+            MINIO_ROOT_PASSWORD: password
             MINIO_DEFAULT_BUCKETS: george
         ports:
-            - "0.0.0.0:8900:9000"
+            - "0.0.0.0:3002:9000"
+        # # Uncomment the next line to have a persistent volume for the Minio server
+        # volumes:
+        #   - minio:/bitnami/minio/data
 
     postgres:
         image: postgres:17-alpine
@@ -47,7 +53,7 @@ services:
             POSTGRES_PASSWORD: postgres
             POSTGRES_HOST: postgres
         ports:
-            - "0.0.0.0:3030:5432" # Use port 3030 for external debugging
+            - "0.0.0.0:3003:5432" # Use port 3030 for external debugging
         # # Uncomment the next line to have a persistent volume for the database
         # volumes:
         #     - postgres:/var/lib/postgresql/data

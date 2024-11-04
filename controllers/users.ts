@@ -71,7 +71,7 @@ export default abstract class UserController {
         }
     }
 
-    public static async updateUser(uuid: string, username?: string, avatarUrl?: string, quote?: string) {
+    public static async updateUser(uuid: string, username?: string, avatarUrl?: string | null, quote?: string) {
         try {
             const user = await DB.instance
                 .update(users)

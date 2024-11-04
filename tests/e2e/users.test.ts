@@ -1,8 +1,14 @@
 import createApp from "@/app";
 import AuthController from "@/controllers/auth";
 import { get, post, put } from "../utils";
+import { readFileSync } from "fs";
+import path from "path";
 
 const app = createApp("e2e-users");
+
+const testGlobals = {
+    userAvatarUrl: null
+};
 
 describe("Test users", () => {
     const email = "test-users@no-reply.local";
@@ -112,11 +118,13 @@ describe("Test users", () => {
     const authToken = AuthController.generateAuthToken(email);
 
     test("should edit the user", async () => {
+        const avatar = readFileSync(path.join(__dirname, "..", "assets", "avatar.png"), "base64");
+
         const res = await put(
             app,
             "/users/:uuid",
             { uuid: userUuid },
-            { quote: "test" },
+            { quote: "test", avatar: avatar },
             { Authorization: `Bearer ${authToken}` }
         );
 
@@ -131,10 +139,30 @@ describe("Test users", () => {
                         uuid: userUuid,
                         email: email,
                         username: "test-users",
-                        avatarUrl: null,
+                        avatarUrl: expect.stringMatching(
+                            /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/
+                        ), // UUID v4 regex
                         clubId: null,
                         quote: "test"
                     }
+                }
+            ]
+        });
+
+        testGlobals.userAvatarUrl = res.body.response[0].data.avatarUrl;
+    });
+
+    test("should get the user avatar", async () => {
+        const res = await get(app, "/blob/:uuid", { uuid: testGlobals.userAvatarUrl ?? "invalid" });
+
+        expect(res.body).toStrictEqual({
+            masterStatus: 200,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 200,
+                    success: true,
+                    data: expect.any(String)
                 }
             ]
         });
@@ -179,7 +207,7 @@ describe("Test users", () => {
                         uuid: userUuid,
                         email: email,
                         username: "test-users",
-                        avatarUrl: null,
+                        avatarUrl: testGlobals.userAvatarUrl,
                         clubId: null,
                         quote: "test"
                     }

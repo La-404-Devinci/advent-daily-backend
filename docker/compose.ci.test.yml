@@ -15,7 +15,7 @@ services:
             REDIS_HOST: redis
 
             MINIO_ROOT_USER: minio
-            MINIO_ROOT_PASSWORD: minio
+            MINIO_ROOT_PASSWORD: password
             MINIO_HOST: minio
             MINIO_DEFAULT_BUCKETS: george
 
@@ -33,6 +33,8 @@ services:
             PROFILE_REDIRECT_URL: http://localhost:1337/profile/{uuid}
         depends_on:
             - postgres
+            - redis
+            - minio
 
     postgres:
         image: postgres:17-alpine
@@ -46,8 +48,8 @@ services:
         image: redis:7.4
 
     minio:
-        image: "minio/minio:latest"
+        image: "bitnami/minio:latest"
         environment:
             MINIO_ROOT_USER: minio
-            MINIO_ROOT_PASSWORD: minio
+            MINIO_ROOT_PASSWORD: password
             MINIO_DEFAULT_BUCKETS: george

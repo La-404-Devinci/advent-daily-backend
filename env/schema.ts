@@ -17,7 +17,7 @@ export const envSchema = z.object({
     REDIS_PORT: znumber().default("6379"),
 
     MINIO_ROOT_USER: z.string().default("minio"),
-    MINIO_ROOT_PASSWORD: z.string().default("minio"),
+    MINIO_ROOT_PASSWORD: z.string().default("password"),
     MINIO_HOST: z.string().default("minio"),
     MINIO_PORT: znumber().default("9000"),
     MINIO_DEFAULT_BUCKETS: z.string().default("george"),
