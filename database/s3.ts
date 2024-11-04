@@ -30,7 +30,9 @@ export default abstract class S3 {
     /**
      * Uploads a compressed image to Minio as a base64 string.
      * @param {Blob} data The image data.
-     * @param {string} path The path to upload the image to.
+     * @param {string} options.path The path to upload the image to.
+     * @param {string} options.creator The creator of the image.
+     * @returns {Promise<string | null>} The path of the uploaded image.
      */
     public static async putImage(data: Blob, options?: { path?: string; creator?: string }): Promise<string | null> {
         try {
