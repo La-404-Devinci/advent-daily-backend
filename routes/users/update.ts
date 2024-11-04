@@ -1,4 +1,5 @@
 import UserController from "@/controllers/users";
+import s3 from "@/database/s3";
 import Status from "@/models/status";
 import { NextFunction, Request, Response } from "express";
 import { string, z } from "zod";
@@ -9,7 +10,7 @@ const params = z.object({
 
 const body = z.object({
     username: z.string().optional(),
-    avatarUrl: z.string().optional(),
+    avatar: z.string().optional(),
     quote: z.string().optional()
 });
 
@@ -45,10 +46,29 @@ export default async function Route_Users_Update(req: Request, res: Response, ne
         });
     }
 
+    let avatarUrl: string | null | undefined = user.avatarUrl || undefined;
+
+    // If the avatar is the default avatar, remove it
+    if (bodyPayload.data.avatar === "default" && user.avatarUrl) {
+        avatarUrl = null;
+    }
+    // If the body contains an avatar, upload it and update the user's avatarUrl
+    else if (bodyPayload.data.avatar) {
+        // Upload the avatar to S3
+        avatarUrl = await s3.putImage(bodyPayload.data.avatar, { creator: user.email });
+
+        if (!avatarUrl) {
+            return Status.send(req, next, {
+                status: 500,
+                error: "errors.image.invalid"
+            });
+        }
+    }
+
     const updatedUser = await UserController.updateUser(
         user.uuid,
         bodyPayload.data.username || user.username,
-        bodyPayload.data.avatarUrl || user.avatarUrl || undefined,
+        avatarUrl,
         bodyPayload.data.quote || undefined
     );
 
