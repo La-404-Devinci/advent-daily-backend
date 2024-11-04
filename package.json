@@ -28,6 +28,7 @@
         "drizzle-orm": "^0.35.3",
         "express": "^4.19.2",
         "jsonwebtoken": "^9.0.2",
+        "minio": "^8.0.2",
         "pg": "^8.13.0",
         "qr-base64": "^0.3.0",
         "redis": "^4.7.0",
