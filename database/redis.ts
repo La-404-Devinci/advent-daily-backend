@@ -38,4 +38,33 @@ export default abstract class Redis {
     public static async del(key: string): Promise<void> {
         await Redis.client.del(key);
     }
+
+    public static async sortedSet<T>(setName: string, score: number, data: T): Promise<void> {
+        const stringValue = JSON.stringify(data);
+
+        await Redis.client.zAdd(setName, {
+            value: stringValue,
+            score
+        });
+    }
+
+    public static async sortedRemove<T>(setName: string, data: T): Promise<void> {
+        const stringValue = JSON.stringify(data);
+        await Redis.client.zRem(setName, stringValue);
+    }
+
+    public static async sortedAll<T>(setName: string): Promise<{ value: T; score: number }[]> {
+        const data = await Redis.client.zRangeWithScores(setName, 0, -1);
+
+        return data.map(({ value, score }) => ({
+            value: JSON.parse(value) as T,
+            score
+        }));
+    }
+
+    public static async sortedGetScore<T>(setName: string, data: T): Promise<number> {
+        const stringValue = JSON.stringify(data);
+        const score = await Redis.client.zScore(setName, stringValue);
+        return score ? score : 0;
+    }
 }
