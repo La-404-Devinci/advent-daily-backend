@@ -2,12 +2,14 @@ import createApp from "@/app";
 import globals from "@/env/env";
 import { toDateString } from "@/utils/date";
 import { del, get, post } from "../utils";
+import AuthController from "@/controllers/auth";
 
 const app = createApp("e2e-challenges");
 
 const testGlobals = {
     clubId: 0,
-    granterId: 0
+    granterId: 0,
+    granterPassword: ""
 };
 
 describe("Test granters", () => {
@@ -30,7 +32,7 @@ describe("Test granters", () => {
         });
     });
 
-    test("should create a club and granters", async () => {
+    test("should create a club and a granter", async () => {
         const resClub = await post(
             app,
             "/admin/clubs",
@@ -79,6 +81,7 @@ describe("Test granters", () => {
         });
 
         testGlobals.granterId = res.body.response[0].data.id ?? "invalid";
+        testGlobals.granterPassword = res.body.response[0].data.password ?? "invalid";
     });
 
     test("should get all granters", async () => {
@@ -120,6 +123,52 @@ describe("Test granters", () => {
                 {
                     status: 204,
                     success: true
+                }
+            ]
+        });
+    });
+
+    test("should get permission denied", async () => {
+        const res = await post(
+            app,
+            "/granters/grant",
+            {
+                userId: -1,
+                challengeId: -1
+            },
+            {
+                authorization: `Bearer definitely wrong`
+            }
+        );
+
+        expect(res.body).toStrictEqual({
+            masterStatus: 401,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 401,
+                    success: false,
+                    error: "errors.auth.granters",
+                    translatedError: "Invalid granter auth"
+                }
+            ]
+        });
+    });
+
+    test("should login as a granter", async () => {
+        const res = await post(app, "/granters/login", {
+            email: "test-granters@no-reply.local",
+            password: testGlobals.granterPassword
+        });
+
+        expect(res.body).toStrictEqual({
+            masterStatus: 200,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 200,
+                    success: true,
+                    data: AuthController.generateGranterAuthToken("test-granters@no-reply.local")
                 }
             ]
         });
