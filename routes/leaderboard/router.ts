@@ -1,13 +1,10 @@
-import middlewareUser from "@/middlewares/auth/user";
 import { Router } from "express";
-import Route_LeaderboardAssociations_List from "./associations";
-import Route_Leaderboard_Get from "./get";
-import Route_Leaderboard_List from "./list";
+import Route_Leaderboard_Read from "./read";
+import Route_Leaderboard_Etag from "./etag";
 
 const leaderboardRouter = Router();
 
-leaderboardRouter.get('/', Route_Leaderboard_List);
-leaderboardRouter.get('/associations', Route_LeaderboardAssociations_List);
-leaderboardRouter.get('/me', middlewareUser, Route_Leaderboard_Get);
+leaderboardRouter.get("/", Route_Leaderboard_Read);
+leaderboardRouter.get("/etag", Route_Leaderboard_Etag);
 
 export default leaderboardRouter;
