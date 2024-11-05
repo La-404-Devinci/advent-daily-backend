@@ -10,3 +10,8 @@ export const toDateISOString = (date?: Date) => {
     const d = date || new Date();
     return toDateString(d) + "T00:00:00.000Z";
 };
+
+export const isDailyDate = (date: Date) => {
+    const today = toDateString();
+    return toDateString(date) === today;
+};

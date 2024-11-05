@@ -8,6 +8,7 @@ import dailyRouter from "./daily/router";
 import clubsRouter from "./clubs/router";
 import authRouter from "./auth/router";
 import usersRouter from "./users/router";
+import leaderboardRouter from "./leaderboard/router";
 
 import grantersRouter from "./granters/router";
 
@@ -23,6 +24,7 @@ router.use("/daily", dailyRouter);
 router.use("/clubs", clubsRouter);
 router.use("/auth", authRouter);
 router.use("/users", usersRouter);
+router.use("/leaderboard", leaderboardRouter);
 
 router.use("/granters", grantersRouter);
 
