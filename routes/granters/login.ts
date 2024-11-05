@@ -28,7 +28,7 @@ export default async function Route_Granters_Login(req: Request, res: Response, 
     if (!granter) {
         return Status.send(req, next, {
             status: 404,
-            error: "errors.notFound"
+            error: "errors.granters.notFound"
         });
     }
 

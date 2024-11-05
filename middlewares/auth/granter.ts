@@ -20,7 +20,7 @@ export default async function middlewareGranter(req: Request, res: Response, nex
     if (!granter) {
         return Status.send(req, next, {
             status: 404,
-            error: "errors.notFound"
+            error: "errors.granters.notFound"
         });
     }
 

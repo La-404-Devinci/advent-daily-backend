@@ -6,6 +6,9 @@
         "invalid": "Invalid image",
         "notFound": "Image not found"
     },
+    "granters": {
+        "notFound": "Granter not found"
+    },
     "auth": {
         "admin": "Invalid X-ADMIN-KEY header",
         "granters": "Invalid granter auth",

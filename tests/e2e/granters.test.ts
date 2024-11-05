@@ -131,7 +131,8 @@ describe("Test granters", () => {
 
     test("should get permission denied", async () => {
         const res = await get(app, "/granters/me", undefined, {
-            authorization: `Bearer definitely wrong`
+            authorization: `Bearer definitely wrong`,
+            "authorization-type": "granter"
         });
 
         expect(res.body).toStrictEqual({
@@ -172,7 +173,8 @@ describe("Test granters", () => {
 
     test("should authenticate", async () => {
         const res = await get(app, "/granters/me", undefined, {
-            authorization: `Bearer ${testGlobals.granterAuthToken}`
+            authorization: `Bearer ${testGlobals.granterAuthToken}`,
+            "authorization-type": "granter"
         });
 
         expect(res.body).toStrictEqual({
