@@ -7,7 +7,7 @@ import { users } from "@/database/schema/users";
 import Status from "@/models/status";
 import { Request, Response, NextFunction } from "express";
 
-export default async function Route_Admin_Dump(req: Request, res: Response, next: NextFunction) {
+export default async function Route_AdminDump_Read(req: Request, res: Response, next: NextFunction) {
     const dumpAcquired = await DB.instance.select().from(acquired);
     const dumpChallenges = await DB.instance.select().from(challenges);
     const dumpClubs = await DB.instance.select().from(clubs);
