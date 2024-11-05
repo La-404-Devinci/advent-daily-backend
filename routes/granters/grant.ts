@@ -1,5 +1,7 @@
 import { znumber } from "@/env/extras";
 import Status from "@/models/status";
+import SocketIO from "@/socket/socket";
+import { InvalidationSubject } from "@/socket/types";
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
@@ -24,6 +26,10 @@ export default async function Route_Granters_Grant(req: Request, res: Response, 
             error: "errors.validation"
         });
     }
+
+    // TODO: Matteo, implement plz
+
+    SocketIO.sendInvalidationNotification(InvalidationSubject.LEADERBOARD);
 
     return Status.send(req, next, {
         status: 500,
