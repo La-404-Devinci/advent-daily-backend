@@ -9,7 +9,8 @@ const app = createApp("e2e-challenges");
 const testGlobals = {
     clubId: 0,
     granterId: 0,
-    granterPassword: ""
+    granterPassword: "",
+    granterAuthToken: AuthController.generateGranterAuthToken("test-granters@no-reply.local")
 };
 
 describe("Test granters", () => {
@@ -129,17 +130,9 @@ describe("Test granters", () => {
     });
 
     test("should get permission denied", async () => {
-        const res = await post(
-            app,
-            "/granters/grant",
-            {
-                userUuid: "none",
-                challengeId: -1
-            },
-            {
-                authorization: `Bearer definitely wrong`
-            }
-        );
+        const res = await get(app, "/granters/me", undefined, {
+            authorization: `Bearer definitely wrong`
+        });
 
         expect(res.body).toStrictEqual({
             masterStatus: 401,
@@ -169,8 +162,29 @@ describe("Test granters", () => {
                     status: 200,
                     success: true,
                     data: {
-                        token: AuthController.generateGranterAuthToken("test-granters@no-reply.local"),
+                        token: testGlobals.granterAuthToken,
                         clubId: testGlobals.clubId
+                    }
+                }
+            ]
+        });
+    });
+
+    test("should authenticate", async () => {
+        const res = await get(app, "/granters/me", undefined, {
+            authorization: `Bearer ${testGlobals.granterAuthToken}`
+        });
+
+        expect(res.body).toStrictEqual({
+            masterStatus: 200,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 200,
+                    success: true,
+                    data: {
+                        clubId: testGlobals.clubId,
+                        email: "test-granters@no-reply.local"
                     }
                 }
             ]
