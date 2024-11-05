@@ -30,6 +30,21 @@ export default abstract class GrantersController {
         return allGranters;
     }
 
+    public static async getGranterByEmail(email: string) {
+        const granter = await DB.instance
+            .select({
+                id: granters.id,
+                email: granters.email,
+                clubId: granters.clubId,
+                password: granters.password
+            })
+            .from(granters)
+            .where(eq(granters.email, email))
+            .limit(1);
+
+        return granter.length ? granter[0] : null;
+    }
+
     public static async createGranter(clubId: number, email: string, password: string) {
         const hashpass = CypherController.hashPassword(password);
 
