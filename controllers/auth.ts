@@ -56,4 +56,28 @@ export default abstract class AuthController {
             return null;
         }
     }
+
+    /**
+     * Creates an authentication token for a granter user
+     * @param email The email of the user
+     * @returns The authentication token
+     */
+    public static generateGranterAuthToken(email: string): string {
+        return sign({ email: email, type: "granters" }, globals.env.JWT_SECRET);
+    }
+
+    /**
+     * Validates an authentication token
+     * @param token The token to validate
+     * @returns The email of the user or null if the token is invalid
+     */
+    public static validateGranterAuthToken(token: string): string | null {
+        try {
+            const email = verify(token, globals.env.JWT_SECRET) as { email: string; type: string };
+            if (email.type !== "granters") return null;
+            return email.email || null;
+        } catch {
+            return null;
+        }
+    }
 }

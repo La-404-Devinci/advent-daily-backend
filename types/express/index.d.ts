@@ -10,6 +10,11 @@ declare global {
                 uuid: string;
                 email: string;
             };
+            granters?: {
+                id: number;
+                email: string;
+                clubId: number;
+            };
         }
     }
 }
