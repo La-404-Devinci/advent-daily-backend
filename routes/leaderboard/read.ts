@@ -24,8 +24,8 @@ export default async function Route_Leaderboard_Read(req: Request, res: Response
         });
     }
 
-    // return Status.send(req, next, {
-    //     status: 200,
-    //     data: await LeaderboardController.getClubLeaderboard()
-    // })
+    return Status.send(req, next, {
+        status: 200,
+        data: await LeaderboardController.getClubLeaderboard()
+    });
 }
