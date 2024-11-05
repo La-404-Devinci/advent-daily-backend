@@ -62,7 +62,7 @@ export default abstract class ClubController {
         return club.length ? club[0] : null;
     }
 
-    public static async getDailyClub() {
+    public static async getDailyClubs() {
         const club = await DB.instance
             .select({
                 avatarUrl: clubs.avatarUrl,
@@ -70,10 +70,9 @@ export default abstract class ClubController {
                 description: clubs.description
             })
             .from(clubs)
-            .where(eq(clubs.dailyDate, new Date()))
-            .limit(1);
+            .where(eq(clubs.dailyDate, new Date()));
 
-        return club.length ? club[0] : null;
+        return club;
     }
 
     public static async createClub(name: string, avatarUrl: string, description?: string, dailyDate?: Date) {

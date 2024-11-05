@@ -8,7 +8,7 @@ import { NextFunction, Request, Response } from "express";
  * Sends a response with a status of 200 and the daily club information.
  */
 export default async function Route_Daily_Read(req: Request, res: Response, next: NextFunction) {
-    const club = await ClubController.getDailyClub();
+    const club = await ClubController.getDailyClubs();
 
     if (!club) {
         return Status.send(req, next, {
