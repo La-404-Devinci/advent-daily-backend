@@ -10,6 +10,7 @@ import middlewareCore from "./middlewares/core";
 import loadEnv from "./env/loader";
 import middlewareUser from "./middlewares/auth/user";
 import { initDatabase } from "./database/init";
+import middlewareGranter from "./middlewares/auth/granter";
 
 export default (logSuffix?: string, initDb = true) => {
     if (initDb) {
@@ -29,6 +30,7 @@ export default (logSuffix?: string, initDb = true) => {
 
     app.use(middlewareI18n);
     app.use(middlewareUser);
+    app.use(middlewareGranter);
 
     app.use(logIncoming);
     app.use(routes);
