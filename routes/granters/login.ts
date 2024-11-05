@@ -39,7 +39,7 @@ export default async function Route_Granters_Login(req: Request, res: Response, 
         });
     }
 
-    const authToken = AuthController.generateGranterAuthToken(granter.password);
+    const authToken = AuthController.generateGranterAuthToken(granter.email);
 
     return Status.send(req, next, {
         status: 200,

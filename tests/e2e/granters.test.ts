@@ -4,7 +4,7 @@ import { toDateString } from "@/utils/date";
 import { del, get, post } from "../utils";
 import AuthController from "@/controllers/auth";
 
-const app = createApp("e2e-challenges");
+const app = createApp("e2e-granters");
 
 const testGlobals = {
     clubId: 0,
@@ -109,28 +109,8 @@ describe("Test granters", () => {
         });
     });
 
-    test("should delete a granter", async () => {
-        const res = await del(
-            app,
-            "/admin/granters/:id",
-            { id: testGlobals.granterId },
-            { "X-ADMIN-KEY": globals.env.ADMIN_TOKEN }
-        );
-
-        expect(res.body).toStrictEqual({
-            masterStatus: 204,
-            sentAt: expect.any(Number),
-            response: [
-                {
-                    status: 204,
-                    success: true
-                }
-            ]
-        });
-    });
-
     test("should get permission denied", async () => {
-        const res = await get(app, "/granters/me", undefined, {
+        const res = await get(app, "/granters/me", undefined, undefined, {
             authorization: `Bearer definitely wrong`,
             "authorization-type": "granter"
         });
@@ -172,7 +152,7 @@ describe("Test granters", () => {
     });
 
     test("should authenticate", async () => {
-        const res = await get(app, "/granters/me", undefined, {
+        const res = await get(app, "/granters/me", undefined, undefined, {
             authorization: `Bearer ${testGlobals.granterAuthToken}`,
             "authorization-type": "granter"
         });
@@ -188,6 +168,26 @@ describe("Test granters", () => {
                         clubId: testGlobals.clubId,
                         email: "test-granters@no-reply.local"
                     }
+                }
+            ]
+        });
+    });
+
+    test("should delete a granter", async () => {
+        const res = await del(
+            app,
+            "/admin/granters/:id",
+            { id: testGlobals.granterId },
+            { "X-ADMIN-KEY": globals.env.ADMIN_TOKEN }
+        );
+
+        expect(res.body).toStrictEqual({
+            masterStatus: 204,
+            sentAt: expect.any(Number),
+            response: [
+                {
+                    status: 204,
+                    success: true
                 }
             ]
         });
