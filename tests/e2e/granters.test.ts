@@ -168,7 +168,10 @@ describe("Test granters", () => {
                 {
                     status: 200,
                     success: true,
-                    data: AuthController.generateGranterAuthToken("test-granters@no-reply.local")
+                    data: {
+                        token: AuthController.generateGranterAuthToken("test-granters@no-reply.local"),
+                        clubId: testGlobals.clubId
+                    }
                 }
             ]
         });
