@@ -8,6 +8,7 @@
     },
     "auth": {
         "admin": "Invalid X-ADMIN-KEY header",
+        "granters": "Invalid granter auth",
         "toomany": "Too many requests",
         "invalid": {
             "token": "Invalid token",

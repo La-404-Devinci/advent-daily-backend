@@ -5,7 +5,9 @@ import { NextFunction, Request, Response } from "express";
 
 export default async function middlewareUser(req: Request, res: Response, next: NextFunction) {
     const authorization = req.header("Authorization");
-    if (!authorization || !authorization.startsWith("Bearer ")) return next();
+    const authorizationType = req.header("Authorization-Type") || "user";
+
+    if (!authorization || !authorization.startsWith("Bearer ") || authorizationType !== "user") return next();
 
     const token = authorization.split("Bearer ")[1];
     if (!token) return next();
