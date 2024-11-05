@@ -8,11 +8,11 @@ const app = createApp("e2e-auth");
 describe("Test authentication", () => {
     const email = "test-auth@no-reply.local";
     const token = AuthController.generateCreationToken(email, false);
-    const redirectUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", token);
 
     test("should send an email", async () => {
         // We use X-ADMIN-KEY to fetch back the redirect URL without expiration
         const res = await post(app, "/auth/send-mail", { email: email }, { "X-ADMIN-KEY": globals.env.ADMIN_TOKEN });
+        const rawRedirectUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", "");
 
         expect(res.body).toStrictEqual({
             masterStatus: 201,
@@ -21,10 +21,12 @@ describe("Test authentication", () => {
                 {
                     status: 201,
                     success: true,
-                    data: redirectUrl
+                    data: expect.stringContaining(rawRedirectUrl)
                 }
             ]
         });
+
+        expect(AuthController.validateCreationToken(res.body.response[0].data.replace(rawRedirectUrl, ""))).toBe(email);
     });
 
     test("should get 'too many requests' error", async () => {
@@ -91,10 +93,12 @@ describe("Test authentication", () => {
                 {
                     status: 200,
                     success: true,
-                    data: expect.stringContaining(authToken.substring(0, authToken.indexOf("."))) // Remove the signature
+                    data: expect.any(String)
                 }
             ]
         });
+
+        expect(AuthController.validateAuthToken(res.body.response[0].data)).toBe(email);
     });
 
     test("should get 'invalid credentials' error", async () => {

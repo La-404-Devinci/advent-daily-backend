@@ -143,12 +143,16 @@ describe("Test granters", () => {
                     status: 200,
                     success: true,
                     data: {
-                        token: testGlobals.granterAuthToken,
+                        token: expect.any(String),
                         clubId: testGlobals.clubId
                     }
                 }
             ]
         });
+
+        expect(AuthController.validateGranterAuthToken(res.body.response[0].data.token)).toBe(
+            "test-granters@no-reply.local"
+        );
     });
 
     test("should authenticate", async () => {
