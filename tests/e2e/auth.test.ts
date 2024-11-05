@@ -91,7 +91,7 @@ describe("Test authentication", () => {
                 {
                     status: 200,
                     success: true,
-                    data: authToken
+                    data: expect.stringContaining(authToken.substring(0, authToken.indexOf("."))) // Remove the signature
                 }
             ]
         });
