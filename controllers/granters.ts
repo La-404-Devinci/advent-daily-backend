@@ -30,11 +30,11 @@ export default abstract class GrantersController {
         return allGranters;
     }
 
-    public static async createGranters(clubId: number, email: string, password: string) {
+    public static async createGranter(clubId: number, email: string, password: string) {
         const hashpass = CypherController.hashPassword(password);
 
         try {
-            return await DB.instance
+            const granter = await DB.instance
                 .insert(granters)
                 .values({
                     clubId: clubId,
@@ -42,8 +42,12 @@ export default abstract class GrantersController {
                     password: hashpass
                 })
                 .returning({
-                    id: granters.id
+                    id: granters.id,
+                    clubId: granters.clubId,
+                    email: granters.email
                 });
+
+            return granter[0];
         } catch (error) {
             Logger.error("granters.ts::createGranters | Error creating granters", error);
             return null;

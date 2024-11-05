@@ -20,7 +20,7 @@ export default async function Route_AdminGranters_Create(req: Request, res: Resp
 
     const randomPassword = crypto.randomUUID();
 
-    const granter = await GrantersController.createGranters(
+    const granter = await GrantersController.createGranter(
         bodyPayload.data.clubId,
         bodyPayload.data.email,
         randomPassword
@@ -33,8 +33,10 @@ export default async function Route_AdminGranters_Create(req: Request, res: Resp
         });
     }
 
+    // TODO: Send email with password
+
     return Status.send(req, next, {
         status: 201,
-        data: granter
+        data: { ...granter, password: randomPassword }
     });
 }
