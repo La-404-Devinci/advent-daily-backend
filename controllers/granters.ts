@@ -1,6 +1,8 @@
 import DB from "@/database/config";
 import { granters } from "@/database/schema/granters";
 import { eq } from "drizzle-orm";
+import CypherController from "./cypher";
+import Logger from "@/log/logger";
 
 export default abstract class GrantersController {
     public static async getAllGranters() {
@@ -19,11 +21,36 @@ export default abstract class GrantersController {
         const allGranters = await DB.instance
             .select({
                 id: granters.id,
-                email: granters.email
+                email: granters.email,
+                clubId: granters.clubId
             })
             .from(granters)
             .where(eq(granters.clubId, clubId));
 
         return allGranters;
+    }
+
+    public static async createGranters(clubId: number, email: string, password: string) {
+        const hashpass = CypherController.hashPassword(password);
+
+        try {
+            return await DB.instance
+                .insert(granters)
+                .values({
+                    clubId: clubId,
+                    email: email,
+                    password: hashpass
+                })
+                .returning({
+                    id: granters.id
+                });
+        } catch (error) {
+            Logger.error("granters.ts::createGranters | Error creating granters", error);
+            return null;
+        }
+    }
+
+    public static async deleteGranters(id: number) {
+        await DB.instance.delete(granters).where(eq(granters.id, id));
     }
 }

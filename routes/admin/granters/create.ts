@@ -1,15 +1,14 @@
-import ClubController from "@/controllers/clubs";
+import GrantersController from "@/controllers/granters";
 import Status from "@/models/status";
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const body = z.object({
     clubId: z.number(),
-    email: z.string(),
-    password: z.string()
+    email: z.string()
 });
 
-export default async function Route_AdminClubs_Create(req: Request, res: Response, next: NextFunction) {
+export default async function Route_AdminGranters_Create(req: Request, res: Response, next: NextFunction) {
     const bodyPayload = body.safeParse(req.body);
 
     if (!bodyPayload.success) {
@@ -19,14 +18,15 @@ export default async function Route_AdminClubs_Create(req: Request, res: Respons
         });
     }
 
-    const club = await ClubController.createClub(
-        bodyPayload.data.name,
-        bodyPayload.data.avatarUrl,
-        bodyPayload.data.description,
-        bodyPayload.data.dailyDate
+    const randomPassword = crypto.randomUUID();
+
+    const granter = await GrantersController.createGranters(
+        bodyPayload.data.clubId,
+        bodyPayload.data.email,
+        randomPassword
     );
 
-    if (!club) {
+    if (!granter) {
         return Status.send(req, next, {
             status: 500,
             error: "system.internal"
@@ -35,6 +35,6 @@ export default async function Route_AdminClubs_Create(req: Request, res: Respons
 
     return Status.send(req, next, {
         status: 201,
-        data: club
+        data: granter
     });
 }

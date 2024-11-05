@@ -1,4 +1,4 @@
-import ClubController from "@/controllers/clubs";
+import GrantersController from "@/controllers/granters";
 import { znumber } from "@/env/extras";
 import Status from "@/models/status";
 import { NextFunction, Request, Response } from "express";
@@ -8,7 +8,7 @@ const params = z.object({
     id: znumber()
 });
 
-export default async function Route_AdminClubs_Delete(req: Request, res: Response, next: NextFunction) {
+export default async function Route_AdminGranters_Delete(req: Request, res: Response, next: NextFunction) {
     const paramsPayload = params.safeParse(req.params);
 
     if (!paramsPayload.success) {
@@ -18,16 +18,7 @@ export default async function Route_AdminClubs_Delete(req: Request, res: Respons
         });
     }
 
-    const club = await ClubController.getClub(paramsPayload.data.id);
-
-    if (!club) {
-        return Status.send(req, next, {
-            status: 404,
-            error: "errors.notFound"
-        });
-    }
-
-    await ClubController.deleteClub(paramsPayload.data.id);
+    await GrantersController.deleteGranters(paramsPayload.data.id);
 
     return Status.send(req, next, {
         status: 204
