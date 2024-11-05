@@ -7,7 +7,9 @@
         "notFound": "Image not found"
     },
     "granters": {
-        "notFound": "Granter not found"
+        "notFound": "Granter not found",
+        "notAllowed": "You can't grant a challenge of another club",
+        "notDaily": "You can't grant a non daily challenge"
     },
     "auth": {
         "admin": "Invalid X-ADMIN-KEY header",
