@@ -133,7 +133,7 @@ describe("Test granters", () => {
             app,
             "/granters/grant",
             {
-                userId: -1,
+                userUuid: "none",
                 challengeId: -1
             },
             {
