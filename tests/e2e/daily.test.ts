@@ -68,11 +68,13 @@ describe("Daily challenges", () => {
                 {
                     status: 200,
                     success: true,
-                    data: {
-                        avatarUrl: "https://placehold.co/400",
-                        name: "daily club",
-                        description: "description"
-                    }
+                    data: expect.arrayContaining([
+                        {
+                            avatarUrl: "https://placehold.co/400",
+                            name: "daily club",
+                            description: "description"
+                        }
+                    ])
                 }
             ]
         });
@@ -90,9 +92,10 @@ describe("Daily challenges", () => {
                     success: true,
                     data: expect.arrayContaining([
                         {
+                            clubId: testGlobals.clubId,
                             id: expect.any(Number),
-                            name: expect.any(String),
-                            score: expect.any(Number)
+                            name: "daily challenge",
+                            score: 100
                         }
                     ])
                 }
