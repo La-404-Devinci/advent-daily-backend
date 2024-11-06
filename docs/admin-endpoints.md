@@ -14,10 +14,10 @@ Body:
 
 ```json
 {
-  "name": "string",
-  "avatarUrl": "string",
-  "description": "string (optional)",
-  "dailyDate": "string (optional)"
+    "name": "string",
+    "avatarUrl": "string",
+    "description": "string (optional)",
+    "dailyDate": "string (optional)"
 }
 ```
 
@@ -27,16 +27,16 @@ Note: If `dailyDate` is not provided, the club will be created with a daily date
 
 Params:
 
-- `id`: number
+-   `id`: number
 
 Body:
 
 ```json
 {
-  "name": "string (optional)",
-  "avatarUrl": "string (optional)",
-  "description": "string (optional)",
-  "dailyDate": "string (optional)"
+    "name": "string (optional)",
+    "avatarUrl": "string (optional)",
+    "description": "string (optional)",
+    "dailyDate": "string (optional)"
 }
 ```
 
@@ -44,7 +44,7 @@ Body:
 
 Params:
 
-- `id`: number
+-   `id`: number
 
 ## Challenges
 
@@ -58,9 +58,9 @@ Body:
 
 ```json
 {
-  "clubId": "number",
-  "score": "number",
-  "name": "string"
+    "clubId": "number",
+    "score": "number",
+    "name": "string"
 }
 ```
 
@@ -68,14 +68,14 @@ Body:
 
 Params:
 
-- `id`: number
+-   `id`: number
 
 Body:
 
 ```json
 {
-  "score": "number",
-  "name": "string"
+    "score": "number",
+    "name": "string"
 }
 ```
 
@@ -83,7 +83,7 @@ Body:
 
 Params:
 
-- `id`: number
+-   `id`: number
 
 ## Granters
 
@@ -91,7 +91,7 @@ Params:
 
 Query:
 
-- `clubId`: number (optional)
+-   `clubId`: number (optional)
 
 Note: List all granters when no `clubId` is provided, otherwise list granters for the specified `clubId`.
 
@@ -101,8 +101,8 @@ Body:
 
 ```json
 {
-  "clubId": "number",
-  "email": "string"
+    "clubId": "number",
+    "email": "string"
 }
 ```
 
@@ -133,8 +133,8 @@ Body:
 
 ```json
 {
-  "title": "string",
-  "message": "string",
-  "iconUrl": "string (optional)"
+    "title": "string",
+    "message": "string",
+    "iconUrl": "string (optional)"
 }
 ```
