@@ -5,6 +5,7 @@ import adminChallengesRouter from "./challenges/router";
 import adminClubsRouter from "./clubs/router";
 import adminGrantersRouter from "./granters/router";
 import Route_Admin_Notification from "./notification";
+import adminDumpRouter from "./dump/router";
 
 const adminRouter = Router();
 
@@ -13,6 +14,7 @@ adminRouter.use(middlewareAdmin);
 adminRouter.use("/clubs", adminClubsRouter);
 adminRouter.use("/challenges", adminChallengesRouter);
 adminRouter.use("/granters", adminGrantersRouter);
+adminRouter.get("/dump", adminDumpRouter);
 
 adminRouter.post("/notification", Route_Admin_Notification);
 

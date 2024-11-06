@@ -90,7 +90,8 @@ export default abstract class ChallengesController {
             .select({
                 id: challenges.id,
                 name: challenges.name,
-                score: challenges.score
+                score: challenges.score,
+                clubId: challenges.clubId
             })
             .from(challenges)
             .innerJoin(clubs, eq(challenges.clubId, clubs.id))
