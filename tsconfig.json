@@ -14,14 +14,16 @@
         ],
         "resolveJsonModule": true,
         "outDir": "./dist",
-        "sourceMap": true,
+        "noImplicitAny": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
-        "skipDefaultLibCheck": true,
         "skipLibCheck": true,
-        "noImplicitAny": true,
-        "types": ["jest", "node"]
+
+        "types": ["jest", "node"],
+        "skipDefaultLibCheck": true,
+
+        "sourceMap": true
     },
     "exclude": ["node_modules", "dist"]
 }

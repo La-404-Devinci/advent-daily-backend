@@ -10,15 +10,16 @@
         "typeRoots": ["types", "./node_modules/@types", "../node_modules/@types"],
         "resolveJsonModule": true,
         "outDir": "./dist",
-        "removeComments": true,
+        "noImplicitAny": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
-        "skipDefaultLibCheck": false,
         "skipLibCheck": true,
-        "noImplicitAny": true,
+
         "types": ["node"],
-        "plugins": [{ "transform": "typescript-transform-paths" }]
+        "skipDefaultLibCheck": false,
+
+        "removeComments": true
     },
     "exclude": ["node_modules", "dist", "tests", "scripts", "jest.config.ts"]
 }
