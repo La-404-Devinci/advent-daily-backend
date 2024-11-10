@@ -19,7 +19,8 @@
         "types": ["node"],
         "skipDefaultLibCheck": false,
 
-        "removeComments": true
+        "removeComments": true,
+        "plugins": [{ "transform": "typescript-transform-paths" }]
     },
     "exclude": ["node_modules", "dist", "tests", "scripts", "jest.config.ts"]
 }
