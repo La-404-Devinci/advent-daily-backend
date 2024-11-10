@@ -3,9 +3,6 @@ import Status from "@/models/status";
 import { NextFunction, Request, Response } from "express";
 
 export const isAdmin = (req: Request) => {
-    console.log("Got admin token:", req.header("X-Admin-Key"));
-    console.log("Expected admin token:", globals.env.ADMIN_TOKEN);
-
     return req.header("X-Admin-Key") === globals.env.ADMIN_TOKEN;
 };
 
