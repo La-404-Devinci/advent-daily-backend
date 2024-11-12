@@ -8,7 +8,8 @@ const body = z.object({
     name: z.string(),
     avatarUrl: z.string(),
     description: z.string().optional(),
-    dailyDate: zdate().optional()
+    dailyDate: zdate().optional(),
+    location: z.string().optional()
 });
 
 export default async function Route_AdminClubs_Create(req: Request, res: Response, next: NextFunction) {
@@ -25,7 +26,8 @@ export default async function Route_AdminClubs_Create(req: Request, res: Respons
         bodyPayload.data.name,
         bodyPayload.data.avatarUrl,
         bodyPayload.data.description,
-        bodyPayload.data.dailyDate
+        bodyPayload.data.dailyDate,
+        bodyPayload.data.location
     );
 
     if (!club) {

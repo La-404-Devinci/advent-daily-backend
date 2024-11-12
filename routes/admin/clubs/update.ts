@@ -12,7 +12,8 @@ const body = z.object({
     name: z.string().optional(),
     avatarUrl: z.string().optional(),
     description: z.string().optional(),
-    dailyDate: zdate().optional()
+    dailyDate: zdate().optional(),
+    location: z.string().optional()
 });
 
 export default async function Route_AdminClubs_Update(req: Request, res: Response, next: NextFunction) {
@@ -40,7 +41,8 @@ export default async function Route_AdminClubs_Update(req: Request, res: Respons
         bodyPayload.data.name || club.name,
         bodyPayload.data.avatarUrl || club.avatarUrl,
         bodyPayload.data.description || club.description || undefined,
-        bodyPayload.data.dailyDate || club.dailyDate || undefined
+        bodyPayload.data.dailyDate || club.dailyDate || undefined,
+        bodyPayload.data.location || club.location || undefined
     );
 
     return Status.send(req, next, {
