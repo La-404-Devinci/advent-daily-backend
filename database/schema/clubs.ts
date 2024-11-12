@@ -8,6 +8,7 @@ export const clubs = pgTable(
         name: text("name").notNull(),
         description: text("description"),
         dailyDate: date("daily_date", { mode: "date" }),
+        location: text("location"),
         updatedAt: timestamp("updated_at")
             .defaultNow()
             .notNull()

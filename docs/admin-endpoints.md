@@ -17,7 +17,8 @@ Body:
     "name": "string",
     "avatarUrl": "string",
     "description": "string (optional)",
-    "dailyDate": "string (optional)"
+    "dailyDate": "string (optional)",
+    "location": "string (optional)"
 }
 ```
 
@@ -27,7 +28,7 @@ Note: If `dailyDate` is not provided, the club will be created with a daily date
 
 Params:
 
--   `id`: number
+- `id`: number
 
 Body:
 
@@ -36,7 +37,8 @@ Body:
     "name": "string (optional)",
     "avatarUrl": "string (optional)",
     "description": "string (optional)",
-    "dailyDate": "string (optional)"
+    "dailyDate": "string (optional)",
+    "location": "string (optional)"
 }
 ```
 
@@ -44,7 +46,7 @@ Body:
 
 Params:
 
--   `id`: number
+- `id`: number
 
 ## Challenges
 
@@ -68,7 +70,7 @@ Body:
 
 Params:
 
--   `id`: number
+- `id`: number
 
 Body:
 
@@ -83,7 +85,7 @@ Body:
 
 Params:
 
--   `id`: number
+- `id`: number
 
 ## Granters
 
@@ -91,7 +93,7 @@ Params:
 
 Query:
 
--   `clubId`: number (optional)
+- `clubId`: number (optional)
 
 Note: List all granters when no `clubId` is provided, otherwise list granters for the specified `clubId`.
 
@@ -107,6 +109,37 @@ Body:
 ```
 
 ### DELETE /granters/:id
+
+## Users
+
+### GET /users
+
+No additional data.
+
+### PUT /users/:id
+
+Params:
+
+- `id`: number
+
+Body:
+
+```json
+{
+    "clubId": "number (optional)",
+    "email": "string (optional)",
+    "password": "string (optional)",
+    "username": "string (optional)",
+    "avatarUrl": "string (optional)",
+    "quote": "string (optional)"
+}
+```
+
+### DELETE /users/:id
+
+Params:
+
+- `id`: number
 
 ## Dump
 

@@ -9,7 +9,8 @@ export default abstract class ClubController {
             .select({
                 id: clubs.id,
                 avatarUrl: clubs.avatarUrl,
-                name: clubs.name
+                name: clubs.name,
+                location: clubs.location
             })
             .from(clubs)
             .orderBy(clubs.name);
@@ -24,7 +25,8 @@ export default abstract class ClubController {
                 avatarUrl: clubs.avatarUrl,
                 name: clubs.name,
                 description: clubs.description,
-                dailyDate: clubs.dailyDate
+                dailyDate: clubs.dailyDate,
+                location: clubs.location
             })
             .from(clubs)
             .orderBy(clubs.name);
@@ -37,7 +39,8 @@ export default abstract class ClubController {
             .select({
                 id: clubs.id,
                 avatarUrl: clubs.avatarUrl,
-                name: clubs.name
+                name: clubs.name,
+                location: clubs.location
             })
             .from(clubs)
             .where(eq(clubs.id, id))
@@ -53,7 +56,8 @@ export default abstract class ClubController {
                 avatarUrl: clubs.avatarUrl,
                 name: clubs.name,
                 description: clubs.description,
-                dailyDate: clubs.dailyDate
+                dailyDate: clubs.dailyDate,
+                location: clubs.location
             })
             .from(clubs)
             .where(eq(clubs.id, id))
@@ -67,7 +71,8 @@ export default abstract class ClubController {
             .select({
                 avatarUrl: clubs.avatarUrl,
                 name: clubs.name,
-                description: clubs.description
+                description: clubs.description,
+                location: clubs.location
             })
             .from(clubs)
             .where(eq(clubs.dailyDate, new Date()));
@@ -75,7 +80,13 @@ export default abstract class ClubController {
         return club;
     }
 
-    public static async createClub(name: string, avatarUrl: string, description?: string, dailyDate?: Date) {
+    public static async createClub(
+        name: string,
+        avatarUrl: string,
+        description?: string,
+        dailyDate?: Date,
+        location?: string
+    ) {
         try {
             const club = await DB.instance
                 .insert(clubs)
@@ -83,7 +94,8 @@ export default abstract class ClubController {
                     name: name,
                     avatarUrl: avatarUrl,
                     description: description,
-                    dailyDate: dailyDate
+                    dailyDate: dailyDate,
+                    location: location
                 })
                 .returning();
 
@@ -99,7 +111,8 @@ export default abstract class ClubController {
         name: string,
         avatarUrl: string,
         description?: string,
-        dailyDate?: Date
+        dailyDate?: Date,
+        location?: string
     ) {
         try {
             const club = await DB.instance
@@ -108,7 +121,8 @@ export default abstract class ClubController {
                     name: name,
                     avatarUrl: avatarUrl,
                     description: description,
-                    dailyDate: dailyDate
+                    dailyDate: dailyDate,
+                    location: location
                 })
                 .where(eq(clubs.id, id))
                 .returning();
