@@ -56,6 +56,7 @@ describe("Test clubs", () => {
                         name: "test",
                         description: null,
                         dailyDate: null,
+                        location: null,
                         createdAt: expect.any(String),
                         updatedAt: expect.any(String)
                     }
@@ -74,6 +75,7 @@ describe("Test clubs", () => {
                 name: "daily test",
                 avatarUrl: "https://placehold.co/400",
                 description: "description",
+                location: "here",
                 dailyDate: toDateString(new Date("2024-10-31"))
             },
             {
@@ -93,6 +95,7 @@ describe("Test clubs", () => {
                         avatarUrl: "https://placehold.co/400",
                         name: "daily test",
                         description: "description",
+                        location: "here",
                         dailyDate: toDateISOString(new Date("2024-10-31")),
                         createdAt: expect.any(String),
                         updatedAt: expect.any(String)
@@ -122,6 +125,7 @@ describe("Test clubs", () => {
                             avatarUrl: "https://placehold.co/200",
                             name: "test",
                             description: null,
+                            location: null,
                             dailyDate: null
                         },
                         {
@@ -129,6 +133,7 @@ describe("Test clubs", () => {
                             avatarUrl: "https://placehold.co/400",
                             name: "daily test",
                             description: "description",
+                            location: "here",
                             dailyDate: toDateISOString(new Date("2024-10-31"))
                         }
                     ])
@@ -169,6 +174,7 @@ describe("Test clubs", () => {
                             avatarUrl: "https://placehold.co/400",
                             name: "challenged",
                             description: "description",
+                            location: "here",
                             dailyDate: toDateISOString(new Date("2024-10-31")),
                             createdAt: expect.any(String),
                             updatedAt: expect.any(String)

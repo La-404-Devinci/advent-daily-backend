@@ -72,7 +72,8 @@ describe("Daily challenges", () => {
                         {
                             avatarUrl: "https://placehold.co/400",
                             name: "daily club",
-                            description: "description"
+                            description: "description",
+                            location: null
                         }
                     ])
                 }
