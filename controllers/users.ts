@@ -2,8 +2,67 @@ import DB from "@/database/config";
 import { users } from "@/database/schema/users";
 import Logger from "@/log/logger";
 import { count, eq } from "drizzle-orm";
+import CypherController from "./cypher";
 
 export default abstract class UserController {
+    public static async getAllUsersWithDetails() {
+        const allUsers = await DB.instance
+            .select({
+                uuid: users.uuid,
+                clubId: users.clubId,
+                email: users.email,
+                username: users.username,
+                avatarUrl: users.avatarUrl,
+                quote: users.quote,
+                updatedAt: users.updatedAt,
+                createdAt: users.createdAt
+            })
+            .from(users);
+
+        return allUsers;
+    }
+
+    public static async updateUserWithDetails(
+        uuid: string,
+        clubId?: number,
+        email?: string,
+        password?: string,
+        username?: string,
+        avatarUrl?: string | null,
+        quote?: string
+    ) {
+        try {
+            const user = await DB.instance
+                .update(users)
+                .set({
+                    clubId: clubId,
+                    email: email,
+                    hashpass: password ? CypherController.hashPassword(password) : undefined,
+                    username: username,
+                    avatarUrl: avatarUrl,
+                    quote: quote
+                })
+                .where(eq(users.uuid, uuid))
+                .returning();
+
+            return user[0];
+        } catch (error: unknown) {
+            Logger.error("users.ts::updateUser", error);
+            return null;
+        }
+    }
+
+    public static async deleteUser(uuid: string) {
+        try {
+            const user = await DB.instance.delete(users).where(eq(users.uuid, uuid)).returning();
+
+            return user[0];
+        } catch (error: unknown) {
+            Logger.error("users.ts::deleteUser", error);
+            return null;
+        }
+    }
+
     public static async getUser(uuid: string) {
         const user = await DB.instance
             .select({
