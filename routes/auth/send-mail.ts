@@ -1,11 +1,14 @@
 import AuthController from "@/controllers/auth";
 import UserController from "@/controllers/users";
 import Redis from "@/database/redis";
+import { RaycastMagicLinkEmail } from "@/email/email";
 import globals from "@/env/env";
 import Logger from "@/log/logger";
 import { isAdmin } from "@/middlewares/auth/admin";
 import Status from "@/models/status";
-import { Request, Response, NextFunction } from "express";
+import { sendEmail } from "@/utils/email";
+import { render } from "@react-email/components";
+import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const body = z.object({
@@ -66,15 +69,24 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
     const creationUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", creationToken);
 
     try {
-        Redis.set(`timeout::${bodyPayload.data.email}`, true, 50);
-
         Logger.debug(
             `send-mail.ts::Route_Auth_Sendmail: Sending email to "${bodyPayload.data.email}" with link "${creationUrl}"`
         );
+        
+        // Render the email template
+        const emailHtml = await render(RaycastMagicLinkEmail({ magicLink: creationUrl }));
+        
+        // Send the email with Nodemailer
+        await sendEmail(emailHtml, bodyPayload.data.email);      
+          
+        Redis.set(`timeout::${bodyPayload.data.email}`, true, 50);
 
-        // TODO: Send email
     } catch (e) {
         Logger.error("send-mail.ts::Route_Auth_Sendmail: Error while sending email", e);
+        return Status.send(req, next, {
+            status: 500,
+            error: "errors.auth.email.failed"
+        });
     }
 
     return Status.send(req, next, {
@@ -82,3 +94,4 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         data: isAdmin(req) ? creationUrl : undefined
     });
 }
+
