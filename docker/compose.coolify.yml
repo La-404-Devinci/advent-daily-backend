@@ -8,7 +8,7 @@ services:
             - MAIL_PORT=${MAIL_PORT:-587}
             - MAIL_SECURE=${MAIL_SECURE:-true}
             - MAIL_USER=${MAIL_USER:-username}
-            - MAIL_PASS=${MAIL_PASS}
+            - MAIL_PASSWORD=${MAIL_PASSWORD}
             - MAIL_FROM=${MAIL_FROM:-username <email>}
             - MAIL_REDIRECT_URL=${MAIL_REDIRECT_URL:-/auth/confirm#{token}}
             - PROFILE_REDIRECT_URL=${PROFILE_REDIRECT_URL:-/profile/{uuid}}
