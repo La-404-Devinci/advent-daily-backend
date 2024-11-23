@@ -10,7 +10,7 @@ const config: JestConfigWithTsJest = {
         "^.+\\.ts$": "ts-jest"
     },
     testEnvironment: "node",
-    moduleFileExtensions: ["ts", "js", "json", "node"],
+    moduleFileExtensions: ["ts", "js", "tsx", "json", "node"],
     moduleNameMapper: {
         "^@/(.*)$": "<rootDir>/$1"
     },
