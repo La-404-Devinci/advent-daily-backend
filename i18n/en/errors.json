@@ -11,6 +11,9 @@
         "notAllowed": "You can't grant a challenge of another club",
         "notDaily": "You can't grant a non daily challenge"
     },
+    "clubs": {
+        "notFound": "Club not found"
+    },
     "auth": {
         "admin": "Invalid X-ADMIN-KEY header",
         "granters": "Invalid granter auth",
