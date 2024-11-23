@@ -13,7 +13,7 @@ const body = z.object({
     data: z.string()
 });
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+export default async function Route_AdminDump_Write(req: Request, res: Response, next: NextFunction) {
     const bodyPayload = body.safeParse(req.body);
 
     if (!bodyPayload.success) {
@@ -63,4 +63,4 @@ export default async (req: Request, res: Response, next: NextFunction) => {
             error: null
         }
     });
-};
+}
