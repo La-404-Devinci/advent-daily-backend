@@ -1,11 +1,14 @@
 import AuthController from "@/controllers/auth";
 import UserController from "@/controllers/users";
 import Redis from "@/database/redis";
+import EmailTemplate from "@/email/email";
 import globals from "@/env/env";
 import Logger from "@/log/logger";
 import { isAdmin } from "@/middlewares/auth/admin";
 import Status from "@/models/status";
-import { Request, Response, NextFunction } from "express";
+import { sendEmail } from "@/utils/email";
+import { render } from "@react-email/components";
+import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const body = z.object({
@@ -37,7 +40,7 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         });
     }
 
-    if (globals.env.NODE_ENV === "production") {
+    if (globals.env.NODE_ENV === "production" && !isAdmin(req)) {
         if (/^[a-zA-Z0-9._%+-]+@edu\.devinci\.fr$/.test(bodyPayload.data.email) === false) {
             return Status.send(req, next, {
                 status: 400,
@@ -45,7 +48,11 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
             });
         }
     } else {
-        Logger.debug(`send-mail.ts::Route_Auth_Sendmail: Skipping email verification`);
+        const reasonIsDev = globals.env.NODE_ENV !== "production";
+        const reasonIsAdmin = isAdmin(req);
+        Logger.debug(
+            `send-mail.ts::Route_Auth_Sendmail: Skipping email verification, reason: (isDev: ${reasonIsDev}, isAdmin: ${reasonIsAdmin})`
+        );
     }
 
     if (await Redis.get(`timeout::${bodyPayload.data.email}`)) {
@@ -66,15 +73,27 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
     const creationUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", creationToken);
 
     try {
-        Redis.set(`timeout::${bodyPayload.data.email}`, true, 50);
-
         Logger.debug(
             `send-mail.ts::Route_Auth_Sendmail: Sending email to "${bodyPayload.data.email}" with link "${creationUrl}"`
         );
 
-        // TODO: Send email
+        // Render the email template
+        const emailHtml = await render(EmailTemplate({ baseUrl: globals.env.MAIL_ASSETS_URL, magicLink: creationUrl }));
+
+        // Send the email with Nodemailer
+        if (isAdmin(req)) {
+            Logger.debug(`send-mail.ts::Route_Auth_Sendmail: Skipping email sending (as admin)`);
+        } else {
+            await sendEmail(emailHtml, bodyPayload.data.email);
+        }
+
+        Redis.set(`timeout::${bodyPayload.data.email}`, true, 50);
     } catch (e) {
         Logger.error("send-mail.ts::Route_Auth_Sendmail: Error while sending email", e);
+        return Status.send(req, next, {
+            status: 500,
+            error: "errors.auth.email.failed"
+        });
     }
 
     return Status.send(req, next, {
