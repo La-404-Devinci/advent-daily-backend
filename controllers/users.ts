@@ -105,14 +105,15 @@ export default abstract class UserController {
         return user[0].count > 0;
     }
 
-    public static async createUser(username: string, email: string, hashpass: string) {
+    public static async createUser(username: string, email: string, hashpass: string, clubId?: number) {
         try {
             const user = await DB.instance
                 .insert(users)
                 .values({
                     username: username,
                     email: email,
-                    hashpass: hashpass
+                    hashpass: hashpass,
+                    clubId: clubId
                 })
                 .returning({
                     uuid: users.uuid,

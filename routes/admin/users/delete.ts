@@ -7,7 +7,7 @@ const params = z.object({
     id: z.string()
 });
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+export default async function Route_AdminUsers_Delete(req: Request, res: Response, next: NextFunction) {
     const paramsPayload = params.safeParse(req.params);
 
     if (!paramsPayload.success) {
@@ -30,4 +30,4 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         status: 200,
         data: user
     });
-};
+}

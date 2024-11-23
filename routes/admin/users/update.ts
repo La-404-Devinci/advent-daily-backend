@@ -17,7 +17,7 @@ const body = z.object({
     quote: z.string().optional()
 });
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+export default async function Route_AdminUsers_Update(req: Request, res: Response, next: NextFunction) {
     const paramsPayload = params.safeParse(req.params);
     const bodyPayload = body.safeParse(req.body);
 
@@ -49,4 +49,4 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         status: 200,
         data: user
     });
-};
+}
