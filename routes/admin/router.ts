@@ -16,7 +16,7 @@ adminRouter.use("/clubs", adminClubsRouter);
 adminRouter.use("/challenges", adminChallengesRouter);
 adminRouter.use("/granters", adminGrantersRouter);
 adminRouter.use("/users", adminUsersRouter);
-adminRouter.get("/dump", adminDumpRouter);
+adminRouter.use("/dump", adminDumpRouter);
 
 adminRouter.post("/notification", Route_Admin_Notification);
 
