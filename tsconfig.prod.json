@@ -20,7 +20,8 @@
         "skipDefaultLibCheck": false,
 
         "removeComments": true,
-        "plugins": [{ "transform": "typescript-transform-paths" }]
+        "plugins": [{ "transform": "typescript-transform-paths" }],
+        "jsx": "react"
     },
     "exclude": ["node_modules", "dist", "tests", "scripts", "jest.config.ts"]
 }
