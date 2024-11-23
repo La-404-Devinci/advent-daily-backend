@@ -34,5 +34,6 @@ export const envSchema = z.object({
     MAIL_FROM: z.string().default("system <user@example.com>"),
 
     MAIL_REDIRECT_URL: z.string().default("http://localhost:1337/auth/confirm#{token}"),
-    PROFILE_REDIRECT_URL: z.string().default("http://localhost:1337/profile/{uuid}")
+    PROFILE_REDIRECT_URL: z.string().default("http://localhost:1337/profile/{uuid}"),
+    MAIL_ASSETS_URL: z.string().default("http://localhost:1337/mail-assets/")
 });

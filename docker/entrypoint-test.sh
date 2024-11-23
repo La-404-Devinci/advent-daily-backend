@@ -11,4 +11,4 @@ else
     SILENT_ARG=""
 fi
 
-npx jest $SILENT_ARG --forceExit
+NODE_OPTIONS="$NODE_OPTIONS --experimental-vm-modules" npx jest $SILENT_ARG --forceExit
