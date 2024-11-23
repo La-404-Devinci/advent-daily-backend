@@ -1,6 +1,8 @@
 import AuthController from "@/controllers/auth";
+import ClubController from "@/controllers/clubs";
 import CypherController from "@/controllers/cypher";
 import UserController from "@/controllers/users";
+import { znumber } from "@/env/extras";
 import Status from "@/models/status";
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
@@ -9,7 +11,8 @@ const body = z.object({
     username: z.string(),
     email: z.string(),
     password: z.string(),
-    token: z.string()
+    token: z.string(),
+    clubId: znumber().optional()
 });
 
 /**
@@ -43,6 +46,17 @@ export default async function Route_Users_Create(req: Request, res: Response, ne
         });
     }
 
+    if (bodyPayload.data.clubId) {
+        const clubExists = await ClubController.getClub(bodyPayload.data.clubId);
+
+        if (!clubExists) {
+            return Status.send(req, next, {
+                status: 404,
+                error: "errors.clubs.notFound"
+            });
+        }
+    }
+
     const userExists = await UserController.existsUserByEmail(bodyPayload.data.email);
 
     if (userExists) {
@@ -55,7 +69,8 @@ export default async function Route_Users_Create(req: Request, res: Response, ne
     const user = await UserController.createUser(
         bodyPayload.data.username,
         bodyPayload.data.email,
-        CypherController.hashPassword(bodyPayload.data.password)
+        CypherController.hashPassword(bodyPayload.data.password),
+        bodyPayload.data.clubId
     );
 
     if (!user) {
