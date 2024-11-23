@@ -1,7 +1,7 @@
 import AuthController from "@/controllers/auth";
 import UserController from "@/controllers/users";
 import Redis from "@/database/redis";
-import { RaycastMagicLinkEmail } from "@/email/email";
+import RaycastMagicLinkEmail from "@/email/email";
 import globals from "@/env/env";
 import Logger from "@/log/logger";
 import { isAdmin } from "@/middlewares/auth/admin";
