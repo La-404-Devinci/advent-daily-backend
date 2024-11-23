@@ -21,7 +21,7 @@ const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "";
 
-export const RaycastMagicLinkEmail = ({
+const RaycastMagicLinkEmail = ({
   magicLink,
 }: RaycastMagicLinkEmailProps) => (
   <Html>
