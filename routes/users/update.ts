@@ -55,7 +55,7 @@ export default async function Route_Users_Update(req: Request, res: Response, ne
     // If the body contains an avatar, upload it and update the user's avatarUrl
     else if (bodyPayload.data.avatar) {
         // Upload the avatar to S3
-        avatarUrl = await s3.putImage(bodyPayload.data.avatar, { creator: user.email });
+        avatarUrl = await s3.putImage(bodyPayload.data.avatar, { creator: user.uuid });
 
         if (!avatarUrl) {
             return Status.send(req, next, {
