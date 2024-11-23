@@ -7,10 +7,10 @@ const config: JestConfigWithTsJest = {
     coverageReporters: ["text", "lcov"],
     verbose: true,
     transform: {
-        "^.+\\.ts$": "ts-jest"
+        "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
     },
     testEnvironment: "node",
-    moduleFileExtensions: ["ts", "js", "tsx", "json", "node"],
+    moduleFileExtensions: ["ts", "js", "jsx", "tsx", "json", "node"],
     moduleNameMapper: {
         "^@/(.*)$": "<rootDir>/$1"
     },

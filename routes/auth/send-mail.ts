@@ -1,7 +1,7 @@
 import AuthController from "@/controllers/auth";
 import UserController from "@/controllers/users";
 import Redis from "@/database/redis";
-import RaycastMagicLinkEmail from "@/email/email";
+import EmailTemplate from "@/email/email";
 import globals from "@/env/env";
 import Logger from "@/log/logger";
 import { isAdmin } from "@/middlewares/auth/admin";
@@ -72,15 +72,14 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         Logger.debug(
             `send-mail.ts::Route_Auth_Sendmail: Sending email to "${bodyPayload.data.email}" with link "${creationUrl}"`
         );
-        
-        // Render the email template
-        const emailHtml = await render(RaycastMagicLinkEmail({ magicLink: creationUrl }));
-        
-        // Send the email with Nodemailer
-        await sendEmail(emailHtml, bodyPayload.data.email);      
-          
-        Redis.set(`timeout::${bodyPayload.data.email}`, true, 50);
 
+        // Render the email template
+        const emailHtml = await render(EmailTemplate({ baseUrl: globals.env.MAIL_ASSETS_URL, magicLink: creationUrl }));
+
+        // Send the email with Nodemailer
+        await sendEmail(emailHtml, bodyPayload.data.email);
+
+        Redis.set(`timeout::${bodyPayload.data.email}`, true, 50);
     } catch (e) {
         Logger.error("send-mail.ts::Route_Auth_Sendmail: Error while sending email", e);
         return Status.send(req, next, {
@@ -94,4 +93,3 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         data: isAdmin(req) ? creationUrl : undefined
     });
 }
-
