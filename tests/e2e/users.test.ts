@@ -1,8 +1,8 @@
 import createApp from "@/app";
 import AuthController from "@/controllers/auth";
-import { get, post, put } from "../utils";
 import { readFileSync } from "fs";
 import path from "path";
+import { get, post, put } from "../utils";
 
 const app = createApp("e2e-users");
 
@@ -204,12 +204,15 @@ describe("Test users", () => {
                     status: 200,
                     success: true,
                     data: {
-                        uuid: userUuid,
-                        email: email,
-                        username: "test-users",
-                        avatarUrl: testGlobals.userAvatarUrl,
-                        clubId: null,
-                        quote: "test"
+                        user: {
+                            uuid: userUuid,
+                            email: email,
+                            username: "test-users",
+                            avatarUrl: testGlobals.userAvatarUrl,
+                            clubId: null,
+                            quote: "test"
+                        },
+                        challenges: []
                     }
                 }
             ]

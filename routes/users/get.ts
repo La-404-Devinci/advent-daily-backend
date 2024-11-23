@@ -10,7 +10,7 @@ const params = z.object({
 /**
  * Handles the GET /users/:id route.
  * Retrieves the user with the given id
- * and sends a response with a status of 200 and the user data.
+ * and sends a response with a status of 200 and the user data and challenges.
  *
  * If the id is invalid, sends a response with a status of 400 and an error message.
  * If the user does not exist, sends a response with a status of 404 and an error message.
@@ -33,8 +33,13 @@ export default async function Route_Users_Get(req: Request, res: Response, next:
         });
     }
 
+    const challenges = await UserController.getChallengesByUser(payload.data.id);
+
     return Status.send(req, next, {
         status: 200,
-        data: user
+        data: {
+            user: user,
+            challenges: challenges
+        }
     });
 }
