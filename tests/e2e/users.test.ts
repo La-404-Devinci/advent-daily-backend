@@ -206,7 +206,6 @@ describe("Test users", () => {
                     data: {
                         user: {
                             uuid: userUuid,
-                            email: email,
                             username: "test-users",
                             avatarUrl: testGlobals.userAvatarUrl,
                             clubId: null,
