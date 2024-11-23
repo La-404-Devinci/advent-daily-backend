@@ -81,6 +81,23 @@ export default abstract class UserController {
         return user.length ? user[0] : null;
     }
 
+    public static async getUserWithEmail(uuid: string) {
+        const user = await DB.instance
+            .select({
+                uuid: users.uuid,
+                email: users.email,
+                username: users.username,
+                avatarUrl: users.avatarUrl,
+                clubId: users.clubId,
+                quote: users.quote
+            })
+            .from(users)
+            .where(eq(users.uuid, uuid))
+            .limit(1);
+
+        return user.length ? user[0] : null;
+    }
+
     public static async getAuthUserByEmail(email: string) {
         const user = await DB.instance
             .select({

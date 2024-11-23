@@ -37,7 +37,7 @@ export default async function Route_Users_Update(req: Request, res: Response, ne
         });
     }
 
-    const user = await UserController.getUser(paramsPayload.data.id);
+    const user = await UserController.getUserWithEmail(paramsPayload.data.id);
 
     if (!user) {
         return Status.send(req, next, {
