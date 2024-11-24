@@ -88,6 +88,7 @@ export default abstract class LeaderboardController {
                 .from(clubs)
                 .innerJoin(users, eq(clubs.id, users.clubId))
                 .innerJoin(acquired, eq(users.uuid, acquired.userUuid))
+                .innerJoin(challenges, eq(acquired.challengeId, challenges.id))
                 .where(eq(clubs.id, user.clubId));
 
             if (clubScoreRequest.length !== 1) return false;
