@@ -1,4 +1,6 @@
 import DB from "@/database/config";
+import { acquired } from "@/database/schema/acquired";
+import { challenges } from "@/database/schema/challenges";
 import { users } from "@/database/schema/users";
 import Logger from "@/log/logger";
 import { count, eq } from "drizzle-orm";
@@ -67,7 +69,6 @@ export default abstract class UserController {
         const user = await DB.instance
             .select({
                 uuid: users.uuid,
-                email: users.email,
                 username: users.username,
                 avatarUrl: users.avatarUrl,
                 clubId: users.clubId,
@@ -155,5 +156,20 @@ export default abstract class UserController {
             Logger.error(error);
             return null;
         }
+    }
+
+    public static async getChallengesByUser(userUuid: string) {
+        const allChallenges = await DB.instance
+            .select({
+                id: challenges.id,
+                clubId: challenges.clubId,
+                name: challenges.name,
+                score: challenges.score
+            })
+            .from(challenges)
+            .innerJoin(acquired, eq(challenges.id, acquired.challengeId))
+            .where(eq(acquired.userUuid, userUuid));
+
+        return allChallenges;
     }
 }

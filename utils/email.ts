@@ -8,7 +8,10 @@ export async function sendEmail(html: string, to: string) {
         secure: globals.env.MAIL_SECURE,
         auth: {
             user: globals.env.MAIL_USER,
-            pass: globals.env.MAIL_PASSWORD
+            pass: globals.env.MAIL_PASSWORD,
+        },
+        tls: {
+            ciphers: "SSLv3"
         }
     });
 

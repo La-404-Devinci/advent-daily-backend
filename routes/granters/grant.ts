@@ -57,7 +57,7 @@ export default async function Route_Granters_Grant(req: Request, res: Response, 
         });
     }
 
-    if (!club.dailyDate || isDailyDate(club.dailyDate)) {
+    if (!club.dailyDate || !isDailyDate(club.dailyDate)) {
         return Status.send(req, next, {
             status: 400,
             error: "errors.granters.notDaily"
@@ -76,7 +76,6 @@ export default async function Route_Granters_Grant(req: Request, res: Response, 
     SocketIO.sendInvalidationNotification(InvalidationSubject.LEADERBOARD);
 
     return Status.send(req, next, {
-        status: 500,
-        error: "not.implemented.yet"
+        status: 204
     });
 }
