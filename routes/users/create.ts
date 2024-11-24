@@ -8,7 +8,8 @@ import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const body = z.object({
-    username: z.string(),
+    username: z.string().max(20),
+    avatar: z.string().optional(),
     email: z.string(),
     password: z.string(),
     token: z.string(),

@@ -9,9 +9,9 @@ const params = z.object({
 });
 
 const body = z.object({
-    username: z.string().optional(),
+    username: z.string().max(20).optional(),
     avatar: z.string().optional(),
-    quote: z.string().optional()
+    quote: z.string().max(50).optional()
 });
 
 /**
