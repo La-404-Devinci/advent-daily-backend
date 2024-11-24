@@ -19,7 +19,7 @@ describe("Test users", () => {
             email: "test-users-invalid-token@no-reply.local",
             token: "definitely not a valid token",
             password: "password",
-            username: "test-users-invalid-token"
+            username: "test-invalid-token"
         });
 
         expect(res.body).toStrictEqual({
