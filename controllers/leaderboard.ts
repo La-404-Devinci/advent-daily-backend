@@ -59,7 +59,7 @@ export default abstract class LeaderboardController {
             return false;
         }
 
-        LeaderboardController.revalidate(userUuid, user.clubId);
+        return LeaderboardController.revalidate(userUuid, user.clubId);
     }
 
     public static async ungrant(userUuid: string, challengeId: number) {
@@ -77,7 +77,7 @@ export default abstract class LeaderboardController {
             return false;
         }
 
-        LeaderboardController.revalidate(userUuid, user.clubId);
+        return LeaderboardController.revalidate(userUuid, user.clubId);
     }
 
     public static async revalidate(userUuid: string, clubId: number | null) {
