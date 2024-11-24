@@ -1,16 +1,17 @@
-import globals from "./env/env";
-import express from "express";
 import cookieParser from "cookie-parser";
-import middlewareI18n from "./middlewares/i18n";
-import Logger from "./log/logger";
-import routes from "./routes/router";
-import Status from "./models/status";
-import { logIncoming, logOutgoing } from "./middlewares/log";
-import middlewareCore from "./middlewares/core";
-import loadEnv from "./env/loader";
-import middlewareUser from "./middlewares/auth/user";
+import cors from "cors";
+import express from "express";
 import { initDatabase } from "./database/init";
+import globals from "./env/env";
+import loadEnv from "./env/loader";
+import Logger from "./log/logger";
 import middlewareGranter from "./middlewares/auth/granter";
+import middlewareUser from "./middlewares/auth/user";
+import middlewareCore from "./middlewares/core";
+import middlewareI18n from "./middlewares/i18n";
+import { logIncoming, logOutgoing } from "./middlewares/log";
+import Status from "./models/status";
+import routes from "./routes/router";
 
 export default (logSuffix?: string, initDb = true) => {
     if (initDb) {
@@ -21,6 +22,8 @@ export default (logSuffix?: string, initDb = true) => {
     Logger.init(logSuffix);
 
     const app = express();
+
+    app.use(cors());
 
     app.set("trust proxy", globals.env.TRUST_PROXY ? 1 : 0);
 
