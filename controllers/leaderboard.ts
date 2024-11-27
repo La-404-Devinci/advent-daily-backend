@@ -2,12 +2,12 @@ import DB from "@/database/config";
 import Redis from "@/database/redis";
 import { acquired } from "@/database/schema/acquired";
 import { challenges } from "@/database/schema/challenges";
+import { clubs } from "@/database/schema/clubs";
 import { users } from "@/database/schema/users";
 import Logger from "@/log/logger";
 import { and, eq, sum } from "drizzle-orm";
-import UserController from "./users";
-import { clubs } from "@/database/schema/clubs";
 import ClubController from "./clubs";
+import UserController from "./users";
 
 export default abstract class LeaderboardController {
     public static async getLeaderboardEtag() {
@@ -93,7 +93,8 @@ export default abstract class LeaderboardController {
         const userScore = parseInt(userScoreRequest[0].score ?? "0");
 
         // Add/update the user's score in the leaderboard
-        await Redis.sortedSet("leaderboard:users", userScore, userUuid);
+        if (userScore > 0) await Redis.sortedSet("leaderboard:users", userScore, userUuid);
+        else await Redis.sortedRemove("leaderboard:users", userUuid);
 
         if (clubId) {
             // Add/update the club's score in the leaderboard

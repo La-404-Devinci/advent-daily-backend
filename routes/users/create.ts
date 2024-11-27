@@ -1,9 +1,12 @@
 import AuthController from "@/controllers/auth";
 import ClubController from "@/controllers/clubs";
 import CypherController from "@/controllers/cypher";
+import LeaderboardController from "@/controllers/leaderboard";
 import UserController from "@/controllers/users";
 import { znumber } from "@/env/extras";
 import Status from "@/models/status";
+import SocketIO from "@/socket/socket";
+import { InvalidationSubject } from "@/socket/types";
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
@@ -80,6 +83,9 @@ export default async function Route_Users_Create(req: Request, res: Response, ne
             error: "errors.auth.conflict.username"
         });
     }
+
+    LeaderboardController.revalidate(user.uuid, user.clubId);
+    SocketIO.sendInvalidationNotification(InvalidationSubject.LEADERBOARD);
 
     return Status.send(req, next, {
         status: 201,

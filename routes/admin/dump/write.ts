@@ -5,12 +5,12 @@ import { clubs } from "@/database/schema/clubs";
 import { granters } from "@/database/schema/granters";
 import { users } from "@/database/schema/users";
 import Status from "@/models/status";
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const body = z.object({
     type: z.enum(["acquired", "challenges", "clubs", "granters", "users"]),
-    data: z.string()
+    data: z.array(z.any())
 });
 
 export default async function Route_AdminDump_Write(req: Request, res: Response, next: NextFunction) {
@@ -26,19 +26,19 @@ export default async function Route_AdminDump_Write(req: Request, res: Response,
     try {
         switch (bodyPayload.data.type) {
             case "acquired":
-                await DB.instance.insert(acquired).values(JSON.parse(bodyPayload.data.data));
+                await DB.instance.insert(acquired).values(bodyPayload.data.data);
                 break;
             case "challenges":
-                await DB.instance.insert(challenges).values(JSON.parse(bodyPayload.data.data));
+                await DB.instance.insert(challenges).values(bodyPayload.data.data);
                 break;
             case "clubs":
-                await DB.instance.insert(clubs).values(JSON.parse(bodyPayload.data.data));
+                await DB.instance.insert(clubs).values(bodyPayload.data.data);
                 break;
             case "granters":
-                await DB.instance.insert(granters).values(JSON.parse(bodyPayload.data.data));
+                await DB.instance.insert(granters).values(bodyPayload.data.data);
                 break;
             case "users":
-                await DB.instance.insert(users).values(JSON.parse(bodyPayload.data.data));
+                await DB.instance.insert(users).values(bodyPayload.data.data);
                 break;
             default:
                 return Status.send(req, next, {
