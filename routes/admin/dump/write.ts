@@ -32,7 +32,13 @@ export default async function Route_AdminDump_Write(req: Request, res: Response,
                 await DB.instance.insert(challenges).values(bodyPayload.data.data);
                 break;
             case "clubs":
-                await DB.instance.insert(clubs).values(bodyPayload.data.data);
+                await DB.instance.insert(clubs).values(
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    bodyPayload.data.data.map((c: any) => ({
+                        ...c,
+                        dailyDate: c.dailyDate ? new Date(c.dailyDate) : null
+                    }))
+                );
                 break;
             case "granters":
                 await DB.instance.insert(granters).values(bodyPayload.data.data);
