@@ -40,8 +40,10 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         });
     }
 
-    if (globals.env.NODE_ENV === "production" && !isAdmin(req)) {
-        if (/^[a-zA-Z0-9._%+-]+@edu\.devinci\.fr$/.test(bodyPayload.data.email) === false) {
+    const parsedEmail = bodyPayload.data.email.toLowerCase().replace(/\./g, "").replace(/\+.*@/g, "@");
+
+    if (!isAdmin(req)) {
+        if (/^[a-zA-Z0-9._%-]+@edu\.devinci\.fr$/.test(parsedEmail) === false) {
             return Status.send(req, next, {
                 status: 400,
                 error: "errors.auth.invalid.email"
@@ -55,27 +57,25 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         );
     }
 
-    if (await Redis.get(`timeout::${bodyPayload.data.email}`)) {
+    if (await Redis.get(`timeout::${parsedEmail}`)) {
         return Status.send(req, next, {
             status: 429,
             error: "errors.auth.toomany"
         });
     }
 
-    if (await UserController.existsUserByEmail(bodyPayload.data.email)) {
+    if (await UserController.existsUserByEmail(parsedEmail)) {
         return Status.send(req, next, {
             status: 409,
             error: "errors.auth.conflict.email"
         });
     }
 
-    const creationToken = AuthController.generateCreationToken(bodyPayload.data.email, !isAdmin(req));
+    const creationToken = AuthController.generateCreationToken(parsedEmail, !isAdmin(req));
     const creationUrl = globals.env.MAIL_REDIRECT_URL.replace("{token}", creationToken);
 
     try {
-        Logger.debug(
-            `send-mail.ts::Route_Auth_Sendmail: Sending email to "${bodyPayload.data.email}" with link "${creationUrl}"`
-        );
+        Logger.debug(`send-mail.ts::Route_Auth_Sendmail: Sending email to "${parsedEmail}" with link "${creationUrl}"`);
 
         // Render the email template
         const emailHtml = await render(EmailTemplate({ baseUrl: globals.env.MAIL_ASSETS_URL, magicLink: creationUrl }));
@@ -84,10 +84,10 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         if (isAdmin(req)) {
             Logger.debug(`send-mail.ts::Route_Auth_Sendmail: Skipping email sending (as admin)`);
         } else {
-            await sendEmail(emailHtml, bodyPayload.data.email);
+            await sendEmail(emailHtml, parsedEmail);
         }
 
-        Redis.set(`timeout::${bodyPayload.data.email}`, true, 50);
+        Redis.set(`timeout::${parsedEmail}`, true, 50);
     } catch (e) {
         Logger.error("send-mail.ts::Route_Auth_Sendmail: Error while sending email", e);
         return Status.send(req, next, {
