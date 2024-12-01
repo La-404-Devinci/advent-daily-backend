@@ -4,7 +4,7 @@ import * as React from "react";
 export default ({ baseUrl, magicLink }: { baseUrl: string; magicLink: string }) => (
     <Html>
         <Head />
-        <Preview>Connecte-toi avec ce lien magique.</Preview>
+        <Preview>Connecte-toi avec ce lien magique et participe aux défis!</Preview>
         <Body style={main}>
             <Container
                 style={{
@@ -12,9 +12,13 @@ export default ({ baseUrl, magicLink }: { baseUrl: string; magicLink: string }) 
                     backgroundImage: `url("${baseUrl}/email-background.png")`
                 }}
             >
-                <Img src={`${baseUrl}/email-logo.png`} width={48} height={48} alt="Raycast" />
+                <Img src={`${baseUrl}/email-logo.png`} width={48} height={48} alt="404 x Celest" />
                 <Heading style={heading}>🪄 Ton lien magique</Heading>
                 <Section style={body}>
+                    <Text style={paragraph}>
+                        Merci de ta participation!
+                        <br />Pour finaliser le processus, merci de vérifier votre adresse e-mail en cliquant sur le lien ci-dessous:
+                    </Text>
                     <Text style={paragraph}>
                         <Link style={link} href={magicLink}>
                             👉 Clique ici pour te connecter 👈
@@ -23,7 +27,7 @@ export default ({ baseUrl, magicLink }: { baseUrl: string; magicLink: string }) 
                     <Text style={paragraph}>Si tu n'as pas demandé ce lien, ignore cet email.</Text>
                 </Section>
                 <Text style={paragraph}>
-                    Best,
+                    Bon jeu,
                     <br />- L'équipe 404 Devinci x Celest
                 </Text>
                 <Hr style={hr} />
@@ -37,8 +41,8 @@ export default ({ baseUrl, magicLink }: { baseUrl: string; magicLink: string }) 
                         margin: "20px 0"
                     }}
                 />
-                <Text style={footer}>Advent Calendar 2024</Text>
-                <Text style={footer}>La 404 Devinci x Celeste</Text>
+                <Text style={footer}>Calendrier de l'Avent</Text>
+                <Text style={footer}>La 404 Devinci x Celest</Text>
             </Container>
         </Body>
     </Html>
