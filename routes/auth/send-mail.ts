@@ -40,13 +40,7 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
         });
     }
 
-    const lowercaseEmail = bodyPayload.data.email.toLowerCase();
-    const [username, domain] = lowercaseEmail.split("@");
-    const parsedEmail = `${username.replace(".", "")}@${domain}`.replace(/\+.*@/g, "@");
-
-    Logger.log("email", bodyPayload.data.email);
-    Logger.log("lowercaseEmail", lowercaseEmail);
-    Logger.log("parsedEmail", parsedEmail);
+    const parsedEmail = bodyPayload.data.email.toLowerCase().replace(/\+.*@/g, "@");
 
     if (!isAdmin(req)) {
         if (/^[a-zA-Z0-9_-]+@edu\.devinci\.fr$/.test(parsedEmail) === false) {
