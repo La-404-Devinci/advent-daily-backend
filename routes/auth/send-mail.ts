@@ -43,7 +43,7 @@ export default async function Route_Auth_Sendmail(req: Request, res: Response, n
     const parsedEmail = bodyPayload.data.email.toLowerCase().replace(/\+.*@/g, "@");
 
     if (!isAdmin(req)) {
-        if (/^[a-zA-Z0-9_-]+@edu\.devinci\.fr$/.test(parsedEmail) === false) {
+        if (/^[a-zA-Z0-9_.-]+@edu\.devinci\.fr$/.test(parsedEmail) === false) {
             return Status.send(req, next, {
                 status: 400,
                 error: "errors.auth.invalid.email"
