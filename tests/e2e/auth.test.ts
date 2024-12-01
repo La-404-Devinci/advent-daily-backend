@@ -30,7 +30,7 @@ describe("Test authentication", () => {
     });
 
     test("should get 'too many requests' error", async () => {
-        const res = await post(app, "/auth/send-mail", { email: email });
+        const res = await post(app, "/auth/send-mail", { email: email }, { "X-ADMIN-KEY": globals.env.ADMIN_TOKEN });
 
         expect(res.body).toStrictEqual({
             masterStatus: 429,
